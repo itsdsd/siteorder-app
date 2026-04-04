@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow:
 
-Sitemap: https://sitebuild.app/sitemap.xml
+Sitemap: https://siteorder.app/sitemap.xml
