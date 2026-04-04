@@ -15,12 +15,14 @@ document.querySelectorAll('.faq-question').forEach(btn => {
     document.querySelectorAll('.faq-item').forEach(i => {
       i.classList.remove('open');
       i.querySelector('.faq-answer').style.maxHeight = null;
+      i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
     });
 
     // Open clicked (if it was closed)
     if (!isOpen) {
       item.classList.add('open');
       answer.style.maxHeight = answer.scrollHeight + 'px';
+      btn.setAttribute('aria-expanded', 'true');
     }
   });
 });
