@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pawfect — Professional Pet Grooming</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#FFF;--surface:#F0F7FF;--blue:#2D7DD2;--orange:#F4A261;--dark:#1A2F4A;--text:#2C3E50;--muted:#6B7280}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+.top-bar{background:var(--blue);color:#fff;text-align:center;padding:8px;font-size:0.8rem;font-weight:600}
+.back-link{position:fixed;top:48px;left:20px;z-index:1000;background:rgba(45,125,210,0.1);color:var(--blue);padding:8px 16px;border-radius:20px;font-size:0.78rem;border:1px solid rgba(45,125,210,0.25);transition:all 0.2s}
+.back-link:hover{background:rgba(45,125,210,0.2)}
+
+nav{background:#fff;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 0 rgba(0,0,0,0.06);position:sticky;top:36px;z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.paw-logo{color:var(--blue)}
+.nav-name{font-size:1.3rem;font-weight:800;color:var(--dark)}
+.nav-name span{color:var(--orange)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:0.85rem;font-weight:600;color:var(--muted);transition:color 0.2s}
+.nav-links a:hover{color:var(--blue)}
+.btn-orange{background:var(--orange);color:#fff;padding:11px 24px;border-radius:8px;font-size:0.85rem;font-weight:700;transition:all 0.2s}
+.btn-orange:hover{background:#e8924f;transform:translateY(-1px);box-shadow:0 4px 12px rgba(244,162,97,0.4)}
+
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 104px);align-items:center}
+.hero-left{padding:64px 48px;background:var(--surface)}
+.hero-badge-wrap{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+.trust-badge{display:flex;align-items:center;gap:6px;background:#fff;border-radius:20px;padding:6px 14px;font-size:0.75rem;font-weight:700;color:var(--dark);border:1px solid rgba(0,0,0,0.08)}
+.trust-badge svg{color:var(--blue)}
+.hero h1{font-size:clamp(2.2rem,4vw,3.2rem);font-weight:800;color:var(--dark);line-height:1.2;margin-bottom:16px}
+.hero h1 span{color:var(--blue)}
+.hero-sub{color:var(--muted);font-size:1rem;margin-bottom:36px;font-weight:400}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-blue{display:inline-block;background:var(--blue);color:#fff;padding:14px 32px;border-radius:8px;font-size:0.9rem;font-weight:700;transition:all 0.2s}
+.btn-blue:hover{background:#2567b8;transform:translateY(-1px);box-shadow:0 4px 16px rgba(45,125,210,0.35)}
+.btn-ghost{display:inline-block;border:2px solid var(--blue);color:var(--blue);padding:12px 28px;border-radius:8px;font-size:0.9rem;font-weight:700;transition:all 0.2s}
+.btn-ghost:hover{background:var(--surface)}
+.hero-right{position:relative;overflow:hidden;align-self:stretch}
+.hero-img{width:100%;height:100%;object-fit:cover;animation:floatImg 4s ease-in-out infinite}
+@keyframes floatImg{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+.section{padding:80px 48px}
+.container{max-width:1100px;margin:0 auto}
+.section-label{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:8px}
+.section-title{font-size:clamp(1.8rem,3vw,2.4rem);font-weight:800;color:var(--dark);margin-bottom:48px}
+
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.service-card{background:var(--surface);border-radius:16px;padding:28px 20px;text-align:center;border:2px solid transparent;transition:all 0.4s;opacity:0;transform:scale(0.92);animation:popIn 0s forwards}
+.service-card.visible{animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards}
+.service-card:nth-child(2).visible{animation-delay:0.1s}
+.service-card:nth-child(3).visible{animation-delay:0.2s}
+.service-card:nth-child(4).visible{animation-delay:0.3s}
+@keyframes popIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
+.service-card:hover{border-color:var(--blue);background:#fff;transform:translateY(-4px);box-shadow:0 8px 24px rgba(45,125,210,0.1)}
+.service-icon{width:52px;height:52px;background:rgba(45,125,210,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:var(--blue)}
+.service-name{font-size:1rem;font-weight:800;color:var(--dark);margin-bottom:6px}
+.service-desc{font-size:0.82rem;color:var(--muted);margin-bottom:12px}
+.service-price{font-size:1rem;font-weight:700;color:var(--orange)}
+
+.steps-section{background:var(--surface)}
+.steps-row{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;position:relative}
+.steps-row::before{content:'';position:absolute;top:28px;left:calc(16.6% + 16px);right:calc(16.6% + 16px);height:2px;background:repeating-linear-gradient(to right,var(--blue) 0,var(--blue) 8px,transparent 8px,transparent 16px)}
+.step-card{text-align:center;position:relative;opacity:0;transform:translateY(20px);transition:all 0.5s}
+.step-card.visible{opacity:1;transform:translateY(0)}
+.step-card:nth-child(2).visible{transition-delay:0.15s}
+.step-card:nth-child(3).visible{transition-delay:0.3s}
+.step-circle{width:56px;height:56px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.2rem;font-weight:800;position:relative;z-index:1}
+.step-card h3{font-size:1rem;font-weight:800;color:var(--dark);margin-bottom:8px}
+.step-card p{font-size:0.85rem;color:var(--muted)}
+
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gallery-item{overflow:hidden;border-radius:12px;aspect-ratio:1}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;border-radius:12px}
+.gallery-item:hover img{transform:scale(1.08)}
+
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.review-card{background:var(--surface);border-radius:16px;padding:28px;opacity:0;transform:translateY(20px);transition:all 0.5s}
+.review-card.visible{opacity:1;transform:translateY(0)}
+.review-card:nth-child(2).visible{transition-delay:0.1s}
+.review-card:nth-child(3).visible{transition-delay:0.2s}
+.stars{display:flex;gap:3px;margin-bottom:12px;color:var(--orange)}
+.review-text{font-size:0.9rem;color:var(--muted);margin-bottom:12px;font-style:italic;line-height:1.7}
+.reviewer{font-size:0.82rem;font-weight:700;color:var(--dark)}
+.reviewer span{font-weight:400;color:var(--muted)}
+
+.cta-band{background:var(--orange);padding:64px 48px;text-align:center}
+.cta-band h2{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;margin-bottom:8px}
+.cta-band p{color:rgba(255,255,255,0.8);margin-bottom:32px}
+.btn-white{display:inline-block;background:#fff;color:var(--orange);padding:14px 40px;border-radius:8px;font-size:0.9rem;font-weight:800;transition:all 0.2s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+
+footer{background:var(--dark);color:rgba(255,255,255,0.5);padding:40px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-brand{font-size:1.3rem;font-weight:800;color:#fff}
+.footer-brand span{color:var(--orange)}
+.footer-info{font-size:0.8rem}
+.footer-copy{font-size:0.75rem;opacity:0.5}
+
+@media(max-width:768px){
+  nav{top:36px;padding:0 16px}.nav-links{display:none}
+  .back-link{top:52px}
+  .hero{grid-template-columns:1fr}.hero-right{height:280px}
+  .hero-left{padding:48px 20px}
+  .section{padding:56px 20px}
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .steps-row{grid-template-columns:1fr}.steps-row::before{display:none}
+  .gallery{grid-template-columns:repeat(2,1fr)}
+  .reviews{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">Free pick-up &amp; drop-off for first-time customers — Book today!</div>
+<a href="../demos.html" class="back-link">← Back to Gallery</a>
+
+<nav>
+  <div class="nav-brand">
+    <svg class="paw-logo" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="7" r="2"/><circle cx="9" cy="4" r="2"/><circle cx="15" cy="4" r="2"/><circle cx="19" cy="7" r="2"/><path d="M12 11c-4 0-7 2.5-7 6s2 5 7 5 7-2 7-5-3-6-7-6z"/></svg>
+    <div class="nav-name">Paw<span>fect</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="#cta" class="btn-orange">Book Appointment</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge-wrap">
+      <div class="trust-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Licensed Groomers</div>
+      <div class="trust-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Cage-Free</div>
+      <div class="trust-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Fully Insured</div>
+    </div>
+    <h1>Your Pet Deserves<br><span>the Best.</span></h1>
+    <p class="hero-sub">Professional grooming with love and care. Walk-ins welcome. Your dog will leave happier than they arrived.</p>
+    <div class="hero-btns">
+      <a href="#cta" class="btn-blue">Book Now</a>
+      <a href="#services" class="btn-ghost">View Services</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=700&q=80" alt="Happy groomed dog">
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="container">
+    <p class="section-label">Our Services</p>
+    <h2 class="section-title">Everything Your Pet Needs</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10z"/><path d="M8 12s1.5 2 4 2 4-2 4-2"/></svg></div>
+        <div class="service-name">Bath &amp; Blow Dry</div>
+        <div class="service-desc">Shampoo, conditioner, blow dry, and brush out for a clean, fresh pup.</div>
+        <div class="service-price">From $45</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l3 7-9 11L3 10z"/></svg></div>
+        <div class="service-name">Full Groom</div>
+        <div class="service-desc">Bath, haircut, nail trim, ear cleaning, and finishing spritz.</div>
+        <div class="service-price">From $75</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div>
+        <div class="service-name">Nail Trim</div>
+        <div class="service-desc">Safe, stress-free nail trimming by certified technicians. No appointment needed.</div>
+        <div class="service-price">$20</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg></div>
+        <div class="service-name">Teeth Brushing</div>
+        <div class="service-desc">Dog-safe enzymatic toothpaste for fresh breath and healthy gums.</div>
+        <div class="service-price">$15</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section steps-section">
+  <div class="container">
+    <p class="section-label">Easy as 1-2-3</p>
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps-row">
+      <div class="step-card">
+        <div class="step-circle">1</div>
+        <h3>Book Online</h3>
+        <p>Pick your service and preferred time. Takes less than 60 seconds.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-circle">2</div>
+        <h3>Drop Off</h3>
+        <p>Bring in your pup (or we pick them up). We'll take it from there.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-circle">3</div>
+        <h3>Pick Up Fresh</h3>
+        <p>You'll get a text when they're ready. Come collect one very happy dog.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="gallery">
+  <div class="container">
+    <p class="section-label">Happy Customers</p>
+    <h2 class="section-title">Our Furry Clients</h2>
+    <div class="gallery">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&q=80" alt="Groomed dog"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=400&q=80" alt="Happy dog"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=400&q=80" alt="Cute dog"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1477884213360-7e9d7dcc1e48?w=400&q=80" alt="Dog portrait"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=400&q=80" alt="Two dogs"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1583511655826-05700d52f4d9?w=400&q=80" alt="Fluffy dog"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <p class="section-label">What People Say</p>
+    <h2 class="section-title">Happy Customers</h2>
+    <div class="reviews">
+      <div class="review-card">
+        <div class="stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="review-text">"My golden retriever absolutely loves coming here. The team is gentle, patient, and he always comes back looking and smelling amazing."</p>
+        <div class="reviewer">Sarah T. <span>&nbsp;&middot;&nbsp; Buddy's mom</span></div>
+      </div>
+      <div class="review-card">
+        <div class="stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="review-text">"We've been bringing our anxious rescue pup here for a year. The cage-free environment makes all the difference — she's calm when we pick her up."</p>
+        <div class="reviewer">James K. <span>&nbsp;&middot;&nbsp; Luna's dad</span></div>
+      </div>
+      <div class="review-card">
+        <div class="stars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <p class="review-text">"Best groomers in the city. Fair pricing, great communication, and my dachshund Otto looks like a show dog every time. Can't recommend enough."</p>
+        <div class="reviewer">Priya M. <span>&nbsp;&middot;&nbsp; Otto's mom</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band" id="cta">
+  <h2>Ready to book?</h2>
+  <p>First appointment? Use code NEWPUP for 20% off your first visit.</p>
+  <a href="#" class="btn-white">Schedule Online</a>
+</section>
+
+<footer>
+  <div class="footer-brand">Paw<span>fect</span></div>
+  <div class="footer-info">Mon–Sat: 8am–6pm &nbsp;&middot;&nbsp; Sun: 9am–4pm &nbsp;&middot;&nbsp; 42 Pine St &nbsp;&middot;&nbsp; (555) 300-9922</div>
+  <div class="footer-copy">&copy; 2026 Pawfect Grooming</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.service-card,.step-card,.review-card').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

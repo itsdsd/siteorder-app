@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus Labs — AI Infrastructure Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07070F;
+    --surface: rgba(255,255,255,0.05);
+    --purple: #7C3AED;
+    --cyan: #06B6D4;
+    --text: #FFFFFF;
+    --muted: #94A3B8;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Sora', sans-serif; }
+
+  /* Back to Gallery */
+  .back-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .back-link:hover { color: var(--text); background: rgba(255,255,255,0.12); }
+  .back-link svg { width: 14px; height: 14px; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(7,7,15,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-wordmark {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--purple), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--purple), var(--cyan));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .btn-gradient-border {
+    padding: 9px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    position: relative;
+    background: transparent;
+    color: var(--text);
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    padding: 1.5px;
+    background: linear-gradient(135deg, var(--purple), var(--cyan));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    transition: opacity 0.3s ease;
+  }
+
+  .btn-gradient-border:hover::before { opacity: 0.7; }
+  .btn-gradient-border:hover { background: rgba(124,58,237,0.1); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    animation: meshShift 12s ease-in-out infinite alternate;
+  }
+
+  @keyframes meshShift {
+    0% {
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 30%, rgba(124,58,237,0.25) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 70%, rgba(6,182,212,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 50% 80%, rgba(124,58,237,0.12) 0%, transparent 60%),
+        var(--bg);
+    }
+    33% {
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 20%, rgba(124,58,237,0.2) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 20% 60%, rgba(6,182,212,0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 60% 90%, rgba(6,182,212,0.1) 0%, transparent 60%),
+        var(--bg);
+    }
+    66% {
+      background:
+        radial-gradient(ellipse 60% 50% at 40% 60%, rgba(124,58,237,0.3) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 85% 30%, rgba(6,182,212,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 15% 80%, rgba(124,58,237,0.15) 0%, transparent 60%),
+        var(--bg);
+    }
+    100% {
+      background:
+        radial-gradient(ellipse 60% 50% at 60% 40%, rgba(124,58,237,0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 30% 80%, rgba(6,182,212,0.2) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 20%, rgba(6,182,212,0.12) 0%, transparent 60%),
+        var(--bg);
+    }
+  }
+
+  /* Grid overlay */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 860px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.3);
+    color: #C4B5FD;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    animation: fadeInDown 0.8s ease forwards;
+  }
+
+  .hero-badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--purple);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 5.5vw, 72px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.9s 0.1s ease both;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #C4B5FD 0%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 40px;
+    animation: fadeInUp 0.9s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.9s 0.3s ease both;
+    margin-bottom: 60px;
+  }
+
+  .btn-primary {
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--purple), var(--cyan));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 30px rgba(124,58,237,0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(124,58,237,0.5);
+  }
+
+  .btn-ghost {
+    padding: 14px 32px;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+
+  .hero-badges {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.9s 0.45s ease both;
+  }
+
+  .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .trust-badge svg { color: var(--cyan); }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* FEATURES */
+  section { padding: 100px 60px; }
+
+  .section-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 17px;
+    max-width: 500px;
+    margin-bottom: 64px;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .feature-card {
+    background: rgba(255,255,255,0.03);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -60%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255,255,255,0.04) 50%,
+      transparent 60%
+    );
+    transform: skewX(-10deg);
+    transition: top 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .feature-card:hover::before { top: 100%; }
+  .feature-card:hover { background: rgba(124,58,237,0.07); }
+
+  .feature-icon {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(6,182,212,0.15));
+    border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .feature-icon svg { width: 20px; height: 20px; color: var(--cyan); }
+
+  .feature-card h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .feature-card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* HOW IT WORKS */
+  .how-section {
+    background: rgba(255,255,255,0.015);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .steps-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .step {
+    flex: 1;
+    text-align: center;
+    padding: 0 20px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .step.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .step:nth-child(1) { transition-delay: 0s; }
+  .step:nth-child(2) { transition-delay: 0.18s; }
+  .step:nth-child(3) { transition-delay: 0.36s; }
+
+  .step-connector {
+    position: absolute;
+    top: 28px;
+    left: 50%;
+    right: -50%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--purple), var(--cyan));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+  }
+
+  .step.is-visible .step-connector { transform: scaleX(1); }
+
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple), var(--cyan));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    margin: 0 auto 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .step p { color: var(--muted); font-size: 14px; }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .pricing-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .pricing-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .pricing-card:nth-child(1) { transition-delay: 0s; }
+  .pricing-card:nth-child(2) { transition-delay: 0.12s; }
+  .pricing-card:nth-child(3) { transition-delay: 0.24s; }
+
+  .pricing-card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  }
+
+  .pricing-card.featured {
+    border-color: transparent;
+    background: rgba(255,255,255,0.04);
+    position: relative;
+  }
+
+  .pricing-card.featured::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1.5px;
+    background: linear-gradient(135deg, var(--purple), var(--cyan));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .pricing-card.featured:hover {
+    box-shadow: 0 30px 80px rgba(124,58,237,0.25) !important;
+  }
+
+  .pricing-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    background: rgba(6,182,212,0.12);
+    border-radius: 100px;
+    padding: 4px 12px;
+    margin-bottom: 20px;
+  }
+
+  .pricing-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .pricing-price {
+    font-size: 48px;
+    font-weight: 800;
+    font-family: 'Sora', sans-serif;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .pricing-price span {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .pricing-desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pricing-features {
+    list-style: none;
+    margin-bottom: 32px;
+  }
+
+  .pricing-features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--muted);
+    padding: 7px 0;
+  }
+
+  .pricing-features li svg { color: var(--cyan); flex-shrink: 0; width: 16px; height: 16px; }
+
+  .pricing-btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+  }
+
+  .pricing-btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .pricing-btn-outline:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+
+  .pricing-btn-fill {
+    background: linear-gradient(135deg, var(--purple), var(--cyan));
+    border: none;
+    color: white;
+    box-shadow: 0 0 30px rgba(124,58,237,0.3);
+  }
+
+  .pricing-btn-fill:hover { box-shadow: 0 0 50px rgba(124,58,237,0.5); transform: translateY(-1px); }
+
+  /* FINAL CTA */
+  .cta-section {
+    text-align: center;
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(124,58,237,0.08) 50%, var(--bg) 100%);
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-section h2 {
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 800;
+    margin-bottom: 20px;
+    letter-spacing: -0.03em;
+  }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  footer p { color: var(--muted); font-size: 13px; }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  /* Scroll animations */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .fade-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .feature-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, background 0.4s ease;
+  }
+
+  .feature-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .feature-card:nth-child(1) { transition-delay: 0s; }
+  .feature-card:nth-child(2) { transition-delay: 0.07s; }
+  .feature-card:nth-child(3) { transition-delay: 0.14s; }
+  .feature-card:nth-child(4) { transition-delay: 0.21s; }
+  .feature-card:nth-child(5) { transition-delay: 0.28s; }
+  .feature-card:nth-child(6) { transition-delay: 0.35s; }
+
+  .stat-val {
+    font-family: 'Sora', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--purple), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+
+    .features-grid { grid-template-columns: 1fr; }
+    .steps-container { flex-direction: column; gap: 40px; align-items: center; }
+    .step-connector { display: none; }
+    .pricing-grid { grid-template-columns: 1fr; }
+
+    footer { flex-direction: column; text-align: center; padding: 32px 24px; }
+
+    .back-link { top: 12px; left: 12px; }
+  }
+
+  @media (max-width: 1024px) {
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-link">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+  Back to Gallery
+</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-wordmark">NEXUS</div>
+  <ul class="nav-links">
+    <li><a href="#">Product</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="#">Docs</a></li>
+    <li><a href="#">Sign In</a></li>
+    <li><a href="#" class="btn-gradient-border">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Now in public beta — join 12,000+ builders
+    </div>
+    <h1>The Infrastructure Layer<br>for <span class="gradient-text">Modern AI</span></h1>
+    <p>Build, deploy, and scale AI workflows without the complexity. From prototype to production in hours, not months.</p>
+    <div class="hero-ctas">
+      <a href="#" class="btn-primary">Start Building Free</a>
+      <a href="#" class="btn-ghost">View Demo →</a>
+    </div>
+    <div class="hero-badges">
+      <div class="trust-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        SOC 2 Certified
+      </div>
+      <div class="trust-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        99.9% Uptime
+      </div>
+      <div class="trust-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        10ms avg latency
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="fade-up">
+    <div class="section-label">Platform</div>
+    <h2 class="section-title">Built for scale</h2>
+    <p class="section-sub">Every component of the Nexus platform is engineered to handle millions of requests without breaking a sweat.</p>
+  </div>
+  <div class="features-grid">
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <h3>Auto-scaling Infrastructure</h3>
+      <p>Automatically adjusts compute resources based on real-time demand. Handle traffic spikes without pre-provisioning.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Real-time Monitoring</h3>
+      <p>Full observability across every inference call. Latency, throughput, error rates — all visible in a single dashboard.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      </div>
+      <h3>One-click Deployment</h3>
+      <p>Go from a trained model to a live API endpoint in seconds. No Kubernetes expertise required. No YAML files.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Team Collaboration</h3>
+      <p>Shared workspaces, role-based access controls, and audit logs. Build AI products as a team without friction.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </div>
+      <h3>API-first Design</h3>
+      <p>Every feature is accessible via a clean REST API. Integrate Nexus into any stack with SDKs for Python, Node, and Go.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+      </div>
+      <h3>Enterprise Security</h3>
+      <p>Private VPCs, data encryption at rest and in transit, SAML SSO, and compliance reporting for regulated industries.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div style="text-align:center; margin-bottom:64px;" class="fade-up">
+    <div class="section-label">Process</div>
+    <h2 class="section-title">How it works</h2>
+    <p class="section-sub" style="margin: 0 auto;">Three steps from idea to production-grade AI.</p>
+  </div>
+  <div class="steps-container">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-connector"></div>
+      <h3>Connect</h3>
+      <p>Link your model or data source in minutes using our intuitive connector library.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-connector"></div>
+      <h3>Configure</h3>
+      <p>Define routing logic, rate limits, and fallbacks through a visual workflow editor.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Deploy</h3>
+      <p>Ship to production with a single command. Monitor performance from day one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="text-align:center;">
+  <div class="fade-up">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Simple, transparent pricing</h2>
+    <p class="section-sub" style="margin: 0 auto 64px;">No hidden fees. Scale up or down at any time.</p>
+  </div>
+  <div class="pricing-grid">
+
+    <div class="pricing-card">
+      <div class="pricing-tag">Starter</div>
+      <div class="pricing-name">Free</div>
+      <div class="pricing-price">$0<span>/mo</span></div>
+      <p class="pricing-desc">Perfect for exploration and side projects.</p>
+      <ul class="pricing-features">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>10k API calls/month</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>2 deployments</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Community support</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Basic analytics</li>
+      </ul>
+      <a href="#" class="pricing-btn pricing-btn-outline">Get Started Free</a>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="pricing-tag">Most Popular</div>
+      <div class="pricing-name">Pro</div>
+      <div class="pricing-price">$49<span>/mo</span></div>
+      <p class="pricing-desc">For teams building production-grade AI products.</p>
+      <ul class="pricing-features">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>500k API calls/month</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited deployments</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Priority support (SLA)</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Advanced analytics</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Team collaboration</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Custom domains</li>
+      </ul>
+      <a href="#" class="pricing-btn pricing-btn-fill">Start Free Trial</a>
+    </div>
+
+    <div class="pricing-card">
+      <div class="pricing-tag">Scale</div>
+      <div class="pricing-name">Enterprise</div>
+      <div class="pricing-price" style="font-size:32px; padding-top:8px;">Custom</div>
+      <p class="pricing-desc">Dedicated infrastructure for mission-critical workloads.</p>
+      <ul class="pricing-features">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited everything</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Dedicated VPC</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>24/7 dedicated support</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>SOC 2 + HIPAA</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>SAML SSO</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Custom SLA</li>
+      </ul>
+      <a href="#" class="pricing-btn pricing-btn-outline">Contact Sales</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="fade-up">
+    <h2>Start building in <span class="gradient-text">minutes.</span></h2>
+    <p>No credit card required. Free tier available forever.</p>
+    <a href="#" class="btn-primary">Create Free Account</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="font-family:'Sora',sans-serif; font-weight:700; background:linear-gradient(90deg,#7C3AED,#06B6D4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">NEXUS</p>
+  <p style="color:var(--muted);">© 2026 Nexus Labs, Inc. All rights reserved.</p>
+  <ul class="footer-links">
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+    <li><a href="#">Security</a></li>
+    <li><a href="#">Status</a></li>
+  </ul>
+</footer>
+
+<script>
+  // IntersectionObserver for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up, .feature-card, .pricing-card, .step').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Count-up animation for stats
+  function countUp(el, target, suffix = '', duration = 1600) {
+    const start = performance.now();
+    const update = (time) => {
+      const elapsed = time - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target).toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  }
+
+  // Observe stat values
+  document.querySelectorAll('.stat-val[data-target]').forEach(el => {
+    const statObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const target = parseFloat(el.dataset.target);
+          const suffix = el.dataset.suffix || '';
+          countUp(el, target, suffix);
+          statObs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    statObs.observe(el);
+  });
+</script>
+
+</body>
+</html>

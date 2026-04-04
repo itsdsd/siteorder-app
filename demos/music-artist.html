@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOID — Signal Lost</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#000;--surface:#0A0A0A;--red:#FF2D55;--text:#FFF;--muted:#555}
+html{scroll-behavior:smooth}
+body{font-family:'Space Mono',monospace;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+.back-link{position:fixed;top:20px;left:20px;z-index:1000;background:rgba(255,45,85,0.1);color:var(--red);padding:8px 16px;font-size:0.7rem;letter-spacing:0.12em;border:1px solid rgba(255,45,85,0.3);transition:all 0.2s}
+.back-link:hover{background:rgba(255,45,85,0.2)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;letter-spacing:0.15em}
+.nav-dot{display:inline-block;width:8px;height:8px;background:var(--red);border-radius:50%;margin-left:4px;vertical-align:middle}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding-top:68px;text-align:center}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1400&q=80') center/cover;opacity:0.15}
+.hero-content{position:relative;z-index:1}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(7rem,20vw,18rem);font-weight:900;line-height:0.9;letter-spacing:0.04em;animation:glitch 4s infinite}
+@keyframes glitch{
+  0%,90%,100%{text-shadow:none;clip-path:none}
+  92%{text-shadow:-4px 0 var(--red),4px 0 #0ff;clip-path:inset(20% 0 30% 0)}
+  94%{text-shadow:4px 0 var(--red),-4px 0 #0ff;clip-path:inset(60% 0 10% 0)}
+  96%{text-shadow:-2px 0 var(--red),2px 0 #0ff;clip-path:none}
+  98%{text-shadow:none}
+}
+.hero-sub{font-size:0.75rem;letter-spacing:0.25em;color:var(--red);text-transform:uppercase;margin-top:16px;margin-bottom:32px}
+.hero-btns{display:flex;gap:16px;justify-content:center}
+.btn-red{background:var(--red);color:#fff;padding:13px 32px;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;font-family:'Space Mono',monospace;cursor:pointer;border:none;transition:opacity 0.2s;display:inline-block}
+.btn-red:hover{opacity:0.85}
+.btn-outline{border:1px solid rgba(255,255,255,0.3);color:#fff;padding:13px 32px;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;transition:all 0.2s;display:inline-block}
+.btn-outline:hover{border-color:#fff}
+
+.section{padding:80px 48px}
+.container{max-width:1000px;margin:0 auto}
+.section-label{font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:900;letter-spacing:0.05em;margin-bottom:40px}
+
+.album-section{background:var(--surface);border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06)}
+.album-inner{display:grid;grid-template-columns:300px 1fr;gap:56px;align-items:start}
+.album-cover{width:100%;aspect-ratio:1;object-fit:cover;border:1px solid rgba(255,255,255,0.1)}
+.tracklist{list-style:none}
+.track{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.06);cursor:pointer;transition:background 0.2s;margin:0 -12px;padding:14px 12px}
+.track:hover{background:rgba(255,255,255,0.04)}
+.track:hover .track-play{color:var(--red)}
+.track-num{font-size:0.7rem;color:var(--muted);width:20px;text-align:right}
+.track-play{color:var(--muted);transition:color 0.2s}
+.track-name{flex:1;font-size:0.82rem;letter-spacing:0.06em}
+.track-dur{font-size:0.72rem;color:var(--muted)}
+.stream-links{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.stream-btn{border:1px solid rgba(255,255,255,0.2);padding:10px 20px;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+.stream-btn:hover{border-color:var(--red);color:var(--red)}
+
+.shows-list{list-style:none}
+.show-row{display:grid;grid-template-columns:120px 1fr 200px auto;align-items:center;gap:24px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.06);opacity:0;transform:translateX(-24px);transition:all 0.5s}
+.show-row.visible{opacity:1;transform:translateX(0)}
+.show-date{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700;line-height:1}
+.show-month{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--red);margin-top:4px}
+.show-city{font-size:0.95rem;font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;letter-spacing:0.05em}
+.show-venue{font-size:0.72rem;color:var(--muted);margin-top:2px}
+.btn-tickets{border:1px solid var(--red);color:var(--red);padding:10px 20px;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;transition:all 0.2s;font-family:'Space Mono',monospace}
+.btn-tickets:hover{background:var(--red);color:#fff}
+
+.vinyl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.vinyl-card{text-align:center;opacity:0;transform:translateY(20px);transition:all 0.5s}
+.vinyl-card.visible{opacity:1;transform:translateY(0)}
+.vinyl-card:nth-child(2){transition-delay:0.15s}
+.vinyl-card:nth-child(3){transition-delay:0.3s}
+.vinyl-wrap{position:relative;margin-bottom:16px;display:inline-block}
+.vinyl-img{width:180px;height:180px;border-radius:50%;object-fit:cover;animation:spin 8s linear infinite;animation-play-state:paused}
+.vinyl-card:hover .vinyl-img{animation-play-state:running}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.vinyl-hole{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:28px;height:28px;background:#000;border-radius:50%;border:1px solid rgba(255,255,255,0.1);pointer-events:none}
+.vinyl-name{font-size:0.82rem;letter-spacing:0.08em;margin-bottom:8px}
+.vinyl-edition{font-size:0.68rem;color:var(--red);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px}
+.btn-order{background:var(--red);color:#fff;padding:10px 24px;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;font-family:'Space Mono',monospace;cursor:pointer;border:none;display:inline-block;transition:opacity 0.2s}
+.btn-order:hover{opacity:0.85}
+
+.newsletter{background:var(--surface);padding:80px 48px;text-align:center;border-top:1px solid rgba(255,255,255,0.06)}
+.newsletter h2{font-family:'Barlow Condensed',sans-serif;font-size:3rem;font-weight:900;letter-spacing:0.05em;margin-bottom:8px}
+.newsletter p{color:var(--muted);font-size:0.8rem;margin-bottom:28px}
+.email-form{display:flex;max-width:400px;margin:0 auto}
+.email-input{flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-right:none;padding:14px 16px;color:#fff;font-family:'Space Mono',monospace;font-size:0.78rem;outline:none}
+.email-input::placeholder{color:var(--muted)}
+.email-submit{background:var(--red);border:none;padding:14px 24px;color:#fff;font-family:'Space Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:opacity 0.2s}
+.email-submit:hover{opacity:0.85}
+
+footer{padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.06);font-size:0.7rem;color:var(--muted)}
+.footer-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;color:#fff}
+
+@media(max-width:768px){
+  nav{padding:0 20px}.nav-links{display:none}
+  .section{padding:64px 20px}
+  .album-inner{grid-template-columns:1fr}.album-cover{max-width:240px}
+  .show-row{grid-template-columns:80px 1fr auto;gap:12px}.show-city-wrap{grid-column:2}
+  .vinyl-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:12px}
+}
+</style>
+</head>
+<body>
+
+<a href="../demos.html" class="back-link">← Back to Gallery</a>
+
+<nav>
+  <div class="nav-logo">VOID<span class="nav-dot"></span></div>
+  <ul class="nav-links">
+    <li><a href="#music">Music</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#vinyl">Merch</a></li>
+    <li><a href="#newsletter">Press</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-title">VOID</div>
+    <div class="hero-sub">New Album: Signal Lost — Out Now</div>
+    <div class="hero-btns">
+      <a href="#music" class="btn-red">Stream Now</a>
+      <a href="#vinyl" class="btn-outline">Pre-Order Vinyl</a>
+    </div>
+  </div>
+</section>
+
+<section class="section album-section" id="music">
+  <div class="container">
+    <p class="section-label">Latest Release</p>
+    <h2 class="section-title">SIGNAL LOST</h2>
+    <div class="album-inner">
+      <img class="album-cover" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80" alt="Signal Lost album art">
+      <div>
+        <ul class="tracklist">
+          <li class="track"><span class="track-num">01</span><span class="track-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="track-name">SIGNAL LOST</span><span class="track-dur">4:12</span></li>
+          <li class="track"><span class="track-num">02</span><span class="track-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="track-name">STATIC PRAYER</span><span class="track-dur">3:47</span></li>
+          <li class="track"><span class="track-num">03</span><span class="track-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="track-name">DEAD CHANNEL</span><span class="track-dur">5:03</span></li>
+          <li class="track"><span class="track-num">04</span><span class="track-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="track-name">FREQUENCY (ft. MIRA)</span><span class="track-dur">4:28</span></li>
+          <li class="track"><span class="track-num">05</span><span class="track-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="track-name">NOISE FLOOR</span><span class="track-dur">6:15</span></li>
+          <li class="track"><span class="track-num">06</span><span class="track-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="track-name">PHANTOM SIGNAL</span><span class="track-dur">3:58</span></li>
+          <li class="track"><span class="track-num">07</span><span class="track-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="track-name">INTERLUDE / VOID</span><span class="track-dur">2:11</span></li>
+          <li class="track"><span class="track-num">08</span><span class="track-play"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="track-name">TRANSMISSION END</span><span class="track-dur">7:44</span></li>
+        </ul>
+        <div class="stream-links">
+          <a href="#" class="stream-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>Spotify</a>
+          <a href="#" class="stream-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>YouTube</a>
+          <a href="#" class="stream-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.56 8.87V17h1.73l.01-8.97 2.48 2.49 1.24-1.24L12 4.5l-5.02 4.78 1.24 1.24 3.34-3.65zM5 21h14v-1.5H5V21z"/></svg>Apple Music</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="shows">
+  <div class="container">
+    <p class="section-label">Live Dates</p>
+    <h2 class="section-title">UPCOMING SHOWS</h2>
+    <ul class="shows-list">
+      <li class="show-row"><div><div class="show-date">15</div><div class="show-month">May 2026</div></div><div><div class="show-city">New York, NY</div><div class="show-venue">Brooklyn Steel</div></div><div style="color:var(--muted);font-size:0.72rem">NORTH AMERICA TOUR</div><a href="#" class="btn-tickets">Tickets</a></li>
+      <li class="show-row" style="transition-delay:0.1s"><div><div class="show-date">22</div><div class="show-month">May 2026</div></div><div><div class="show-city">Chicago, IL</div><div class="show-venue">Metro Chicago</div></div><div style="color:var(--muted);font-size:0.72rem">NORTH AMERICA TOUR</div><a href="#" class="btn-tickets">Tickets</a></li>
+      <li class="show-row" style="transition-delay:0.2s"><div><div class="show-date">08</div><div class="show-month">Jun 2026</div></div><div><div class="show-city">Los Angeles, CA</div><div class="show-venue">The Fonda Theatre</div></div><div style="color:var(--muted);font-size:0.72rem">NORTH AMERICA TOUR</div><a href="#" class="btn-tickets">Tickets</a></li>
+      <li class="show-row" style="transition-delay:0.3s"><div><div class="show-date">19</div><div class="show-month">Jul 2026</div></div><div><div class="show-city">London, UK</div><div class="show-venue">Village Underground</div></div><div style="color:var(--muted);font-size:0.72rem">EUROPE TOUR</div><a href="#" class="btn-tickets">Tickets</a></li>
+      <li class="show-row" style="transition-delay:0.4s"><div><div class="show-date">03</div><div class="show-month">Aug 2026</div></div><div><div class="show-city">Berlin, DE</div><div class="show-venue">Berghain Kantine</div></div><div style="color:var(--muted);font-size:0.72rem">EUROPE TOUR</div><a href="#" class="btn-tickets">Tickets</a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="vinyl" style="background:var(--surface)">
+  <div class="container">
+    <p class="section-label">Merch</p>
+    <h2 class="section-title">AVAILABLE ON VINYL</h2>
+    <div class="vinyl-grid">
+      <div class="vinyl-card">
+        <div class="vinyl-wrap">
+          <img class="vinyl-img" src="https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=300&q=80" alt="Standard Black Vinyl">
+          <div class="vinyl-hole"></div>
+        </div>
+        <div class="vinyl-name">SIGNAL LOST — Standard</div>
+        <div class="vinyl-edition">Black Vinyl / $28</div>
+        <a href="#" class="btn-order">Order Now</a>
+      </div>
+      <div class="vinyl-card">
+        <div class="vinyl-wrap">
+          <img class="vinyl-img" src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=300&q=80" alt="Limited Edition Vinyl">
+          <div class="vinyl-hole"></div>
+        </div>
+        <div class="vinyl-name">SIGNAL LOST — Limited</div>
+        <div class="vinyl-edition">Red Vinyl / $38</div>
+        <a href="#" class="btn-order">Order Now</a>
+      </div>
+      <div class="vinyl-card">
+        <div class="vinyl-wrap">
+          <img class="vinyl-img" src="https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=300&q=80" alt="Signed Edition">
+          <div class="vinyl-hole"></div>
+        </div>
+        <div class="vinyl-name">SIGNAL LOST — Signed</div>
+        <div class="vinyl-edition">Clear Vinyl / $55</div>
+        <a href="#" class="btn-order">Order Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter" id="newsletter">
+  <h2>STAY IN THE VOID</h2>
+  <p>Tour dates, releases, and nothing else. Unsubscribe anytime.</p>
+  <div class="email-form">
+    <input class="email-input" type="email" placeholder="your@email.com">
+    <button class="email-submit">Subscribe</button>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">VOID</div>
+  <p style="font-size:0.68rem;color:var(--muted)">&copy; 2026 VOID. All rights reserved.</p>
+  <p style="font-size:0.68rem;color:var(--muted)">Booking: agency@void.fm</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.show-row,.vinyl-card').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

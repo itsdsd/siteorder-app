@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prestige Realty — Homes That Define Luxury</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#080808;--surface:#111;--gold:#B8963E;--gold-light:#D4AF6A;--text:#FFF;--muted:#888;--border:rgba(184,150,62,0.25)}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+.back-link{position:fixed;top:20px;left:20px;z-index:1000;background:rgba(184,150,62,0.15);color:var(--gold);padding:8px 16px;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--border);transition:all 0.3s}
+.back-link:hover{background:rgba(184,150,62,0.25)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:76px;display:flex;align-items:center;justify-content:space-between;transition:background 0.4s}
+nav.scrolled{background:rgba(8,8,8,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-brand{display:flex;align-items:center;gap:12px}
+.nav-monogram{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);font-weight:600;border:1px solid var(--border);width:40px;height:40px;display:flex;align-items:center;justify-content:center}
+.nav-name{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);transition:color 0.2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{border:1px solid var(--gold);color:var(--gold);padding:10px 24px;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;transition:all 0.3s}
+.nav-cta:hover{background:var(--gold);color:#000}
+
+.hero{height:100vh;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 80px}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1400&q=80') center/cover}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,0.9) 0%,rgba(8,8,8,0.4) 50%,rgba(8,8,8,0.2) 100%)}
+.hero-content{position:relative;max-width:680px}
+.hero-tag{font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,6vw,5rem);font-weight:300;line-height:1.1;margin-bottom:12px}
+.gold-rule{width:60px;height:1px;background:var(--gold);margin:20px 0}
+.hero-sub{color:var(--muted);font-size:0.9rem;max-width:420px;margin-bottom:36px;font-weight:300}
+.search-bar{display:flex;gap:0;background:rgba(255,255,255,0.06);border:1px solid var(--border);backdrop-filter:blur(8px);animation:slideUp 0.8s 0.3s both}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.search-field{flex:1;padding:16px 20px;background:none;border:none;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.85rem;outline:none}
+.search-field::placeholder{color:var(--muted)}
+.search-btn{background:var(--gold);border:none;padding:16px 32px;color:#000;font-family:'Montserrat',sans-serif;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:opacity 0.2s}
+.search-btn:hover{opacity:0.85}
+
+.listings{padding:96px 48px;background:var(--surface)}
+.container{max-width:1100px;margin:0 auto}
+.section-label{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;margin-bottom:48px}
+.listing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.listing-card{background:var(--bg);border:1px solid rgba(255,255,255,0.06);overflow:hidden;transition:border-color 0.3s;opacity:0;transform:translateY(32px);transition:opacity 0.6s,transform 0.6s,border-color 0.3s}
+.listing-card.visible{opacity:1;transform:translateY(0)}
+.listing-card:nth-child(2){transition-delay:0.15s}
+.listing-card:nth-child(3){transition-delay:0.3s}
+.listing-card:hover{border-color:var(--border)}
+.listing-img{width:100%;height:240px;object-fit:cover;transition:transform 0.6s}
+.listing-card:hover .listing-img{transform:scale(1.04)}
+.listing-img-wrap{overflow:hidden;position:relative}
+.listing-tag{position:absolute;top:16px;left:16px;background:var(--gold);color:#000;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:4px 12px;font-weight:700}
+.listing-body{padding:24px}
+.listing-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;margin-bottom:4px}
+.listing-price{color:var(--gold);font-size:1.1rem;font-weight:600;margin-bottom:16px}
+.listing-details{display:flex;gap:20px;color:var(--muted);font-size:0.78rem}
+.listing-detail{display:flex;align-items:center;gap:6px}
+.listing-link{display:block;margin-top:20px;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);border-top:1px solid rgba(255,255,255,0.06);padding-top:16px}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);background:var(--gold)}
+.stat-item{padding:40px;text-align:center;border-right:1px solid rgba(0,0,0,0.15)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:600;color:#000;line-height:1}
+.stat-label{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(0,0,0,0.6);margin-top:8px}
+
+.about-section{padding:96px 48px}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.about-text{opacity:0;transform:translateX(-28px);transition:all 0.7s}
+.about-text.visible{opacity:1;transform:translateX(0)}
+.about-img{width:100%;height:460px;object-fit:cover;border:1px solid var(--border);opacity:0;transform:translateX(28px);transition:all 0.7s 0.15s}
+.about-img.visible{opacity:1;transform:translateX(0)}
+.about-text h2{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;margin-bottom:20px}
+.about-text p{color:var(--muted);font-size:0.9rem;margin-bottom:16px;font-weight:300;line-height:1.8}
+.btn-gold{display:inline-block;background:var(--gold);color:#000;padding:14px 36px;font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;margin-top:8px;transition:opacity 0.2s}
+.btn-gold:hover{opacity:0.85}
+
+.cta-section{background:var(--surface);padding:80px 48px;text-align:center;border-top:1px solid var(--border)}
+.cta-section h2{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;margin-bottom:12px}
+.cta-section p{color:var(--muted);margin-bottom:36px;font-weight:300}
+
+footer{background:#040404;padding:40px 48px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border)}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold);letter-spacing:0.1em}
+.footer-links{display:flex;gap:28px;list-style:none;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+.footer-links a{transition:color 0.2s}.footer-links a:hover{color:var(--gold)}
+.footer-copy{font-size:0.72rem;color:var(--muted);opacity:0.5}
+
+@media(max-width:768px){
+  nav{padding:0 20px}.nav-links{display:none}
+  .hero{padding:0 20px 60px}
+  .search-bar{flex-direction:column}
+  .listing-grid{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .about-inner{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:16px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<a href="../demos.html" class="back-link">← Back to Gallery</a>
+
+<nav id="nav">
+  <div class="nav-brand">
+    <div class="nav-monogram">P·R</div>
+    <div class="nav-name">Prestige Realty</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#listings">Buy</a></li>
+    <li><a href="#">Sell</a></li>
+    <li><a href="#">Developments</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Book Viewing</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Luxury Real Estate</div>
+    <h1>Homes That<br>Define Luxury</h1>
+    <div class="gold-rule"></div>
+    <p class="hero-sub">Curated properties for discerning buyers. Private viewings available seven days a week.</p>
+    <div class="search-bar">
+      <input class="search-field" type="text" placeholder="Location, neighbourhood, or address">
+      <select class="search-field" style="border-left:1px solid rgba(184,150,62,0.2);max-width:180px">
+        <option>Property Type</option>
+        <option>Apartment</option>
+        <option>House</option>
+        <option>Penthouse</option>
+        <option>Villa</option>
+      </select>
+      <button class="search-btn">Search</button>
+    </div>
+  </div>
+</section>
+
+<section class="listings" id="listings">
+  <div class="container">
+    <p class="section-label">Available Now</p>
+    <h2 class="section-title">Featured Listings</h2>
+    <div class="listing-grid">
+      <div class="listing-card">
+        <div class="listing-img-wrap">
+          <img class="listing-img" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80" alt="The Meridian Penthouse">
+          <div class="listing-tag">For Sale</div>
+        </div>
+        <div class="listing-body">
+          <div class="listing-name">The Meridian Penthouse</div>
+          <div class="listing-price">$4,200,000</div>
+          <div class="listing-details">
+            <div class="listing-detail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 22v-9a5 5 0 0 1 10 0v9M3 22h18M15 22V12a4 4 0 0 1 8 0v10"/></svg>4 Bed</div>
+            <div class="listing-detail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6 L9 12 M4 12h16"/></svg>3 Bath</div>
+            <div class="listing-detail">3,200 sqft</div>
+          </div>
+          <a class="listing-link" href="#">View Property →</a>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img-wrap">
+          <img class="listing-img" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80" alt="Lakefront Villa">
+          <div class="listing-tag">For Sale</div>
+        </div>
+        <div class="listing-body">
+          <div class="listing-name">Lakefront Villa</div>
+          <div class="listing-price">$2,850,000</div>
+          <div class="listing-details">
+            <div class="listing-detail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 22v-9a5 5 0 0 1 10 0v9M3 22h18M15 22V12a4 4 0 0 1 8 0v10"/></svg>5 Bed</div>
+            <div class="listing-detail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6 L9 12 M4 12h16"/></svg>4 Bath</div>
+            <div class="listing-detail">4,100 sqft</div>
+          </div>
+          <a class="listing-link" href="#">View Property →</a>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img-wrap">
+          <img class="listing-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="Downtown Loft">
+          <div class="listing-tag">For Sale</div>
+        </div>
+        <div class="listing-body">
+          <div class="listing-name">Downtown Loft</div>
+          <div class="listing-price">$1,650,000</div>
+          <div class="listing-details">
+            <div class="listing-detail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 22v-9a5 5 0 0 1 10 0v9M3 22h18M15 22V12a4 4 0 0 1 8 0v10"/></svg>2 Bed</div>
+            <div class="listing-detail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6 L9 12 M4 12h16"/></svg>2 Bath</div>
+            <div class="listing-detail">1,800 sqft</div>
+          </div>
+          <a class="listing-link" href="#">View Property →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-row" id="stats-row">
+  <div class="stat-item"><div class="stat-num" data-target="2.4" data-prefix="$" data-suffix="B">$0B</div><div class="stat-label">Total Sold</div></div>
+  <div class="stat-item"><div class="stat-num" data-target="850" data-suffix="+">0</div><div class="stat-label">Properties</div></div>
+  <div class="stat-item"><div class="stat-num" data-target="15" data-suffix=" Yrs">0</div><div class="stat-label">Experience</div></div>
+  <div class="stat-item"><div class="stat-num" data-target="98" data-suffix="%">0%</div><div class="stat-label">Client Satisfaction</div></div>
+</div>
+
+<section class="about-section">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-text">
+        <p class="section-label">About Us</p>
+        <h2>Uncompromising<br>Excellence</h2>
+        <div class="gold-rule"></div>
+        <p>Prestige Realty was founded on a simple conviction: that exceptional properties deserve exceptional representation. For fifteen years, we have connected buyers and sellers of the finest residential real estate in the region.</p>
+        <p>Our team of 22 specialists brings deep market knowledge, discreet service, and an unwavering commitment to outcomes that exceed expectations.</p>
+        <a href="#cta" class="btn-gold">Schedule a Private Showing</a>
+      </div>
+      <img class="about-img" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80" alt="Prestige Realty office">
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="cta">
+  <p class="section-label">Get in Touch</p>
+  <h2>Find your perfect home.</h2>
+  <p>Our team is available seven days a week for private showings, consultations, and valuations.</p>
+  <a href="#" class="btn-gold">Book a Private Showing</a>
+</section>
+
+<footer>
+  <div class="footer-brand">PRESTIGE REALTY</div>
+  <ul class="footer-links">
+    <li><a href="#">Buy</a></li>
+    <li><a href="#">Sell</a></li>
+    <li><a href="#">Developments</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="footer-copy">&copy; 2026 Prestige Realty</div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+function countUp(el) {
+  const target = parseFloat(el.dataset.target);
+  const prefix = el.dataset.prefix || '';
+  const suffix = el.dataset.suffix || '';
+  const isFloat = String(target).includes('.');
+  let current = 0;
+  const step = target / 60;
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = prefix + (isFloat ? current.toFixed(1) : Math.floor(current)) + suffix;
+    if (current >= target) clearInterval(timer);
+  }, 24);
+}
+
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { document.querySelectorAll('[data-target]').forEach(countUp); statsObs.disconnect(); }
+  });
+}, { threshold: 0.5 });
+statsObs.observe(document.getElementById('stats-row'));
+
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.listing-card,.about-text,.about-img').forEach(el => revealObs.observe(el));
+
+// 3D tilt on cards
+document.querySelectorAll('.listing-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `perspective(800px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(0)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+</script>
+</body>
+</html>

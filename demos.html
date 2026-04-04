@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Gallery — SiteOrder</title>
+<meta name="description" content="Browse 15 custom-built website demos. Every site is unique, beautifully designed, and built by hand. See what SiteOrder can build for your business.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0A0F1E;
+  --surface:#111827;
+  --surface2:#1C2537;
+  --accent:#4F8EF7;
+  --accent2:#6FA3FF;
+  --white:#FFFFFF;
+  --gray:#94A3B8;
+  --gray2:#4B5563;
+  --border:rgba(255,255,255,0.07);
+  --radius:16px;
+  --nav-h:64px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);
+  display:flex;align-items:center;
+  background:rgba(10,15,30,0.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  max-width:1280px;margin:0 auto;padding:0 32px;width:100%;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-size:18px;font-weight:700;color:var(--white);text-decoration:none;
+  letter-spacing:-0.01em;
+}
+.nav-logo span{color:var(--accent)}
+.nav-back{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:500;color:var(--gray);text-decoration:none;
+  transition:color .2s;
+}
+.nav-back:hover{color:var(--white)}
+.nav-back svg{width:16px;height:16px}
+.nav-cta{
+  background:var(--accent);color:var(--white);
+  padding:9px 22px;border-radius:8px;
+  font-size:13px;font-weight:600;text-decoration:none;
+  transition:all .2s;
+}
+.nav-cta:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,142,247,0.4)}
+
+/* HERO */
+.page-hero{
+  padding:calc(var(--nav-h) + 72px) 0 72px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.page-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(79,142,247,0.1) 0%,transparent 70%);
+}
+.page-hero-inner{max-width:800px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
+.page-hero-label{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.25);
+  color:var(--accent2);padding:6px 16px;border-radius:50px;
+  font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  margin-bottom:24px;
+}
+.page-hero h1{
+  font-size:clamp(40px,5vw,64px);font-weight:700;letter-spacing:-0.03em;
+  line-height:1;color:var(--white);margin-bottom:20px;
+}
+.page-hero h1 span{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.page-hero p{
+  font-size:18px;line-height:1.7;color:var(--gray);font-weight:300;
+  max-width:560px;margin:0 auto 40px;
+}
+.hero-stats{
+  display:flex;justify-content:center;gap:48px;
+  padding-top:32px;border-top:1px solid var(--border);
+}
+.hero-stat-num{font-size:32px;font-weight:700;color:var(--white);line-height:1;margin-bottom:4px}
+.hero-stat-label{font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray)}
+
+/* FILTER BAR */
+.filter-bar{
+  padding:0 0 48px;position:sticky;top:var(--nav-h);z-index:50;
+  background:linear-gradient(to bottom,var(--bg) 80%,transparent);
+  padding-top:24px;
+}
+.filter-inner{max-width:1280px;margin:0 auto;padding:0 32px}
+.filter-scroll{
+  display:flex;gap:8px;overflow-x:auto;
+  scrollbar-width:none;-ms-overflow-style:none;
+  padding-bottom:4px;
+}
+.filter-scroll::-webkit-scrollbar{display:none}
+.filter-btn{
+  flex-shrink:0;padding:9px 20px;border-radius:50px;border:1px solid var(--border);
+  background:transparent;color:var(--gray);cursor:pointer;
+  font-family:'Inter',sans-serif;font-size:13px;font-weight:500;
+  transition:all .2s;white-space:nowrap;
+}
+.filter-btn:hover{border-color:rgba(255,255,255,0.2);color:var(--white)}
+.filter-btn.active{
+  background:var(--accent);border-color:var(--accent);color:var(--white);
+  box-shadow:0 4px 16px rgba(79,142,247,0.3);
+}
+
+/* GRID */
+.gallery-section{padding:0 0 100px}
+.gallery-inner{max-width:1280px;margin:0 auto;padding:0 32px}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+  gap:24px;
+}
+.demo-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+  transition:transform .3s,border-color .3s,box-shadow .3s;
+  cursor:pointer;text-decoration:none;display:block;
+  opacity:0;transform:translateY(24px);
+  transition:opacity .5s ease,transform .5s ease,border-color .3s,box-shadow .3s;
+}
+.demo-card.in-view{opacity:1;transform:none}
+.demo-card:hover{border-color:rgba(79,142,247,0.3);box-shadow:0 16px 48px rgba(0,0,0,0.4);transform:translateY(-4px)}
+.demo-card-preview{
+  position:relative;height:220px;overflow:hidden;
+  background:var(--surface2);
+}
+.demo-card-preview img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .5s ease;
+  display:block;
+}
+.demo-card:hover .demo-card-preview img{transform:scale(1.04)}
+.demo-card-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,15,30,0.7) 0%,transparent 50%);
+  opacity:0;transition:opacity .3s;
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:20px;
+}
+.demo-card:hover .demo-card-overlay{opacity:1}
+.demo-card-view-btn{
+  background:var(--accent);color:var(--white);
+  padding:10px 24px;border-radius:8px;
+  font-size:13px;font-weight:600;letter-spacing:0.04em;
+  display:flex;align-items:center;gap:6px;
+}
+.demo-card-view-btn svg{width:14px;height:14px}
+.demo-card-tag{
+  position:absolute;top:14px;left:14px;
+  background:rgba(10,15,30,0.85);backdrop-filter:blur(8px);
+  color:var(--gray);border:1px solid var(--border);
+  padding:4px 12px;border-radius:50px;
+  font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+}
+.demo-card-body{padding:20px 24px}
+.demo-card-name{
+  font-size:17px;font-weight:700;color:var(--white);
+  margin-bottom:4px;letter-spacing:-0.01em;
+}
+.demo-card-desc{font-size:13px;line-height:1.5;color:var(--gray);margin-bottom:16px}
+.demo-card-meta{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:14px;border-top:1px solid var(--border);
+}
+.demo-card-style{
+  display:flex;gap:6px;flex-wrap:wrap;
+}
+.style-pill{
+  background:rgba(79,142,247,0.08);border:1px solid rgba(79,142,247,0.15);
+  color:var(--accent2);padding:3px 10px;border-radius:50px;
+  font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+}
+.demo-card-arrow{
+  width:32px;height:32px;border-radius:8px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gray2);transition:all .2s;flex-shrink:0;
+}
+.demo-card:hover .demo-card-arrow{border-color:var(--accent);color:var(--accent)}
+
+/* HIDDEN (filter) */
+.demo-card.hidden{display:none}
+
+/* CTA BAND */
+.cta-band{
+  padding:80px 0;
+  background:linear-gradient(135deg,rgba(79,142,247,0.08) 0%,transparent 50%,rgba(79,142,247,0.04) 100%);
+  border-top:1px solid var(--border);
+}
+.cta-band-inner{
+  max-width:700px;margin:0 auto;padding:0 32px;
+  text-align:center;
+}
+.cta-band h2{
+  font-size:clamp(32px,4vw,48px);font-weight:700;letter-spacing:-0.02em;
+  color:var(--white);margin-bottom:16px;
+}
+.cta-band p{font-size:16px;line-height:1.7;color:var(--gray);margin-bottom:36px}
+.cta-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.btn-primary{
+  background:var(--accent);color:var(--white);
+  padding:15px 32px;border-radius:10px;
+  font-size:14px;font-weight:600;letter-spacing:0.02em;text-decoration:none;
+  transition:all .3s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(79,142,247,0.4)}
+.btn-ghost{
+  border:1px solid var(--border);color:var(--white);
+  padding:15px 28px;border-radius:10px;
+  font-size:14px;font-weight:600;text-decoration:none;
+  transition:all .2s;
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.05)}
+
+/* FOOTER */
+footer{
+  padding:32px;text-align:center;
+  border-top:1px solid var(--border);
+}
+footer p{font-size:13px;color:var(--gray2)}
+footer a{color:var(--gray);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--accent)}
+
+@media(max-width:768px){
+  .gallery-grid{grid-template-columns:1fr}
+  .hero-stats{gap:28px}
+  .nav-back span{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">SiteOrder<span>.</span></a>
+    <a href="index.html" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      <span>Back to Home</span>
+    </a>
+    <a href="index.html#pricing" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-label">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Every Site Is Unique
+    </div>
+    <h1>See What We <span>Build</span></h1>
+    <p>15 fully custom websites across different industries and design styles. Each one hand-built, animated, and ready to inspire yours.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">15</div>
+        <div class="hero-stat-label">Demo Sites</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">48h</div>
+        <div class="hero-stat-label">Delivery</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">$129</div>
+        <div class="hero-stat-label">Per Year</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <div class="filter-scroll" role="group" aria-label="Filter by category">
+      <button class="filter-btn active" data-filter="all">All (15)</button>
+      <button class="filter-btn" data-filter="business">Business</button>
+      <button class="filter-btn" data-filter="hospitality">Hospitality</button>
+      <button class="filter-btn" data-filter="health">Health &amp; Fitness</button>
+      <button class="filter-btn" data-filter="creative">Creative</button>
+      <button class="filter-btn" data-filter="retail">Retail &amp; Shop</button>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery-section">
+  <div class="gallery-inner">
+    <div class="gallery-grid" id="gallery">
+
+      <!-- 1. Architecture -->
+      <a href="demos/architecture.html" class="demo-card" data-cat="business creative" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=720&q=80" alt="Architecture firm website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Architecture</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Forma Studio</h3>
+          <p class="demo-card-desc">Swiss-grid architectural firm with black/white/red palette, clip-path section reveals, and bold project showcase.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Minimal</span>
+              <span class="style-pill">Swiss Grid</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 2. Coffee Shop -->
+      <a href="demos/coffee-shop.html" class="demo-card" data-cat="hospitality retail" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=720&q=80" alt="Coffee shop website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Cafe</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Brew &amp; Co.</h3>
+          <p class="demo-card-desc">Warm earth tones, parallax hero, Playfair Display serif, menu cards, and a full story section for a specialty cafe.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Warm</span>
+              <span class="style-pill">Serif</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 3. Florist -->
+      <a href="demos/florist.html" class="demo-card" data-cat="retail creative" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1487530811015-780c5a8b4f5f?w=720&q=80" alt="Florist website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Florist</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Bloom</h3>
+          <p class="demo-card-desc">Blush and sage botanical palette with falling petal animations, product grid, and custom SVG botanical illustrations.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Botanical</span>
+              <span class="style-pill">Elegant</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 4. Law Firm -->
+      <a href="demos/law-firm.html" class="demo-card" data-cat="business" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=720&q=80" alt="Law firm website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Law Firm</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Chen &amp; Associates</h3>
+          <p class="demo-card-desc">Navy and gold, authoritative serif typography, animated count-up statistics, practice area cards, and partner profiles.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Corporate</span>
+              <span class="style-pill">Serif</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 5. Photography -->
+      <a href="demos/photography.html" class="demo-card" data-cat="creative" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=720&q=80" alt="Photography portfolio website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Photography</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Lens &amp; Light</h3>
+          <p class="demo-card-desc">Dark minimal portfolio with Ken Burns hero animation, masonry gallery grid, and client testimonials section.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Dark</span>
+              <span class="style-pill">Portfolio</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 6. Restaurant -->
+      <a href="demos/restaurant.html" class="demo-card" data-cat="hospitality" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=720&q=80" alt="Restaurant website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Restaurant</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Maison</h3>
+          <p class="demo-card-desc">Dark and gold French bistro aesthetic. Playfair Display, candlelit atmosphere, full menu, and reservation system.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Luxury</span>
+              <span class="style-pill">Dark Gold</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 7. Tech Startup -->
+      <a href="demos/tech-startup.html" class="demo-card" data-cat="business" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=720&q=80" alt="Tech startup website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Tech Startup</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Nexus Labs</h3>
+          <p class="demo-card-desc">Glassmorphism UI with animated gradient mesh background, floating feature cards, and SaaS pricing table.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Glassmorphism</span>
+              <span class="style-pill">SaaS</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 8. Gym -->
+      <a href="demos/gym.html" class="demo-card" data-cat="health" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=720&q=80" alt="Gym website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Gym</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Iron Forge</h3>
+          <p class="demo-card-desc">High-energy dark design with electric yellow accents, Bebas Neue, diagonal clip-paths, and animated stats counters.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Bold</span>
+              <span class="style-pill">High Energy</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 9. Yoga -->
+      <a href="demos/yoga.html" class="demo-card" data-cat="health" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=720&q=80" alt="Yoga studio website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Yoga Studio</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Roots Studio</h3>
+          <p class="demo-card-desc">Sage and terracotta with Cormorant Garamond, floating organic blob animation, class schedule, and testimonials.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Organic</span>
+              <span class="style-pill">Calm</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 10. Real Estate -->
+      <a href="demos/real-estate.html" class="demo-card" data-cat="business" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=720&q=80" alt="Real estate website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Real Estate</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Prestige Realty</h3>
+          <p class="demo-card-desc">Black and gold luxury agency with Cormorant Garamond, 3D perspective tilt effect on listing cards, and count-up stats.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Luxury</span>
+              <span class="style-pill">3D Tilt</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 11. Music Artist -->
+      <a href="demos/music-artist.html" class="demo-card" data-cat="creative" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=720&q=80" alt="Music artist website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Music Artist</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">VOID</h3>
+          <p class="demo-card-desc">Pure black with red accents, CSS glitch text animation, spinning vinyl records, and a distortion-style discography layout.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Glitch</span>
+              <span class="style-pill">Edgy</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 12. Interior Design -->
+      <a href="demos/interior-design.html" class="demo-card" data-cat="creative business" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=720&q=80" alt="Interior design website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Interior Design</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Atelier</h3>
+          <p class="demo-card-desc">Warm neutrals and DM Serif Display, project grid with hover reveal, alternating process steps, and editorial-style layout.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Editorial</span>
+              <span class="style-pill">Warm</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 13. Pet Grooming -->
+      <a href="demos/pet-grooming.html" class="demo-card" data-cat="retail business" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=720&q=80" alt="Pet grooming website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Pet Grooming</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Pawfect</h3>
+          <p class="demo-card-desc">Friendly blue and orange with Nunito, spring pop animation on service cards, gallery grid, and reviews section.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Friendly</span>
+              <span class="style-pill">Playful</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 14. Bakery -->
+      <a href="demos/bakery.html" class="demo-card" data-cat="hospitality retail" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=720&q=80" alt="Bakery website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Bakery</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Éclat Bakery</h3>
+          <p class="demo-card-desc">Warm cream and rich brown with Playfair Display, steam animation, French bakery menu, and a story-driven layout.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Artisan</span>
+              <span class="style-pill">French</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- 15. Personal Trainer -->
+      <a href="demos/personal-trainer.html" class="demo-card" data-cat="health business" target="_blank" rel="noopener">
+        <div class="demo-card-preview">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=720&q=80" alt="Personal trainer website" loading="lazy">
+          <div class="demo-card-overlay">
+            <div class="demo-card-view-btn">
+              View Live
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+          </div>
+          <span class="demo-card-tag">Personal Trainer</span>
+        </div>
+        <div class="demo-card-body">
+          <h3 class="demo-card-name">Peak Performance</h3>
+          <p class="demo-card-desc">Dark and teal with Oswald, animated stat counters, CSS progress bars, transformation showcase, and program pricing.</p>
+          <div class="demo-card-meta">
+            <div class="demo-card-style">
+              <span class="style-pill">Dark</span>
+              <span class="style-pill">Athletic</span>
+            </div>
+            <div class="demo-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <div class="cta-band-inner">
+    <h2>Like What You See?</h2>
+    <p>Every one of these was hand-built. Yours will be too — custom colors, fonts, content, and animations tailored to your business. Delivered in 48 hours.</p>
+    <div class="cta-btns">
+      <a href="index.html#pricing" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Order Your Website — $129/yr
+      </a>
+      <a href="index.html" class="btn-ghost">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 SiteOrder &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy</a></p>
+</footer>
+
+<script>
+// Reveal animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('in-view');
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+document.querySelectorAll('.demo-card').forEach(el => observer.observe(el));
+
+// Filter
+const filterBtns = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.demo-card');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    cards.forEach(card => {
+      if (filter === 'all') {
+        card.classList.remove('hidden');
+      } else {
+        const cats = card.dataset.cat || '';
+        card.classList.toggle('hidden', !cats.includes(filter));
+      }
+    });
+  });
+});
+
+// Nav shadow on scroll
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.boxShadow = window.scrollY > 20
+    ? '0 2px 20px rgba(0,0,0,0.4)' : 'none';
+});
+</script>
+</body>
+</html>

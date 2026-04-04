@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roots Studio — Find Stillness Within</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F7F3EE;--surface:#EDE8E0;--sage:#7C9A7E;--terra:#C4956A;--dark:#3D3530;--text:#4A3F38;--muted:#8A7C74}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+.back-link{position:fixed;top:20px;left:20px;z-index:1000;background:rgba(124,154,126,0.15);color:var(--sage);padding:8px 16px;border-radius:20px;font-size:0.78rem;letter-spacing:0.06em;border:1px solid rgba(124,154,126,0.3);transition:all 0.3s}
+.back-link:hover{background:rgba(124,154,126,0.25)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;transition:background 0.4s,box-shadow 0.4s}
+nav.scrolled{background:rgba(247,243,238,0.95);box-shadow:0 1px 0 rgba(61,53,48,0.08);backdrop-filter:blur(8px)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--dark)}
+.nav-dot{display:inline-block;width:6px;height:6px;background:var(--sage);border-radius:50%;margin-right:8px;vertical-align:middle}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:0.82rem;letter-spacing:0.06em;color:var(--muted);transition:color 0.2s}
+.nav-links a:hover{color:var(--dark)}
+
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding-top:72px}
+.hero-left{padding:80px 64px 80px 48px;position:relative}
+.hero-blob{position:absolute;right:-80px;top:50%;transform:translateY(-50%);width:340px;height:340px;background:var(--sage);border-radius:50%;opacity:0.12;animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(-50%) scale(1)}50%{transform:translateY(calc(-50% - 16px)) scale(1.04)}}
+.hero-badge{display:inline-block;background:rgba(124,154,126,0.12);border:1px solid rgba(124,154,126,0.25);border-radius:20px;padding:4px 16px;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--sage);margin-bottom:24px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,5vw,4.2rem);font-weight:300;line-height:1.2;color:var(--dark);margin-bottom:20px;font-style:italic}
+.hero-sub{color:var(--muted);max-width:400px;margin-bottom:36px;font-weight:300;font-size:1rem}
+.btn-sage{display:inline-block;background:var(--sage);color:#fff;padding:14px 36px;border-radius:4px;font-size:0.85rem;letter-spacing:0.08em;transition:all 0.3s}
+.btn-sage:hover{background:#6a8a6c;transform:translateY(-2px)}
+.btn-ghost{display:inline-block;border:1px solid var(--muted);color:var(--muted);padding:14px 36px;border-radius:4px;font-size:0.85rem;margin-left:12px;transition:all 0.3s}
+.btn-ghost:hover{border-color:var(--dark);color:var(--dark)}
+.hero-right{height:100vh;position:relative;overflow:hidden}
+.hero-right img{width:100%;height:100%;object-fit:cover}
+
+.section{padding:96px 48px}
+.container{max-width:1100px;margin:0 auto}
+.section-label{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--terra);margin-bottom:12px}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3rem);font-weight:300;color:var(--dark);margin-bottom:16px;font-style:italic}
+.section-sub{color:var(--muted);max-width:520px;margin-bottom:56px;font-weight:300}
+
+.classes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.class-card{background:#fff;border-radius:12px;padding:36px 28px;box-shadow:0 2px 24px rgba(61,53,48,0.06);opacity:0;transform:translateY(28px);transition:all 0.6s}
+.class-card.visible{opacity:1;transform:translateY(0)}
+.class-card:nth-child(2){transition-delay:0.15s}
+.class-card:nth-child(3){transition-delay:0.3s}
+.class-icon{width:52px;height:52px;background:rgba(124,154,126,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--sage)}
+.class-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--dark);margin-bottom:8px}
+.class-card p{color:var(--muted);font-size:0.9rem;font-weight:300;margin-bottom:16px}
+.class-meta{display:flex;gap:16px;font-size:0.78rem;color:var(--terra)}
+.level-dots{display:flex;gap:4px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--sage)}
+.dot.empty{background:var(--surface)}
+
+.about-section{background:var(--surface)}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.about-img{width:100%;height:460px;object-fit:cover;border-radius:8px;opacity:0;transform:translateX(-28px);transition:all 0.7s}
+.about-img.visible{opacity:1;transform:translateX(0)}
+.about-text{opacity:0;transform:translateX(28px);transition:all 0.7s 0.15s}
+.about-text.visible{opacity:1;transform:translateX(0)}
+.about-text h2{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--dark);margin-bottom:20px;font-style:italic}
+.about-text p{color:var(--muted);font-weight:300;margin-bottom:16px;line-height:1.8}
+
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.testimonial{background:#fff;border-radius:12px;padding:32px;opacity:0;transform:translateY(20px);transition:all 0.6s}
+.testimonial.visible{opacity:1;transform:translateY(0)}
+.testimonial:nth-child(2){transition-delay:0.15s}
+.testimonial:nth-child(3){transition-delay:0.3s}
+.quote-mark{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--sage);line-height:1;margin-bottom:12px}
+.testimonial p{font-style:italic;color:var(--muted);font-size:0.95rem;font-weight:300;margin-bottom:16px}
+.testimonial-name{font-size:0.8rem;font-weight:600;color:var(--dark);letter-spacing:0.06em}
+
+.cta-section{background:var(--sage);padding:80px 48px;text-align:center}
+.cta-section h2{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:#fff;margin-bottom:12px;font-style:italic}
+.cta-section p{color:rgba(255,255,255,0.75);margin-bottom:36px;font-weight:300}
+.btn-white{display:inline-block;background:#fff;color:var(--sage);padding:14px 40px;border-radius:4px;font-size:0.85rem;font-weight:600;letter-spacing:0.06em;transition:all 0.3s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.15)}
+
+footer{background:var(--dark);color:rgba(247,243,238,0.6);padding:48px;text-align:center}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-style:italic;color:var(--bg);margin-bottom:16px}
+.footer-links{display:flex;gap:28px;justify-content:center;margin-bottom:24px;list-style:none;font-size:0.8rem}
+.footer-links a{transition:color 0.2s}.footer-links a:hover{color:var(--bg)}
+.footer-copy{font-size:0.78rem;opacity:0.4}
+
+@media(max-width:768px){
+  nav{padding:0 20px}.nav-links{display:none}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-left{padding:100px 20px 48px}
+  .hero-right{height:340px}
+  .section{padding:64px 20px}
+  .classes-grid,.about-inner,.testimonials{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<a href="../demos.html" class="back-link">← Back to Gallery</a>
+
+<nav id="nav">
+  <div class="nav-logo"><span class="nav-dot"></span>Roots Studio</div>
+  <ul class="nav-links">
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#cta">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-blob"></div>
+    <div class="hero-badge">Yoga &middot; Meditation &middot; Breathwork</div>
+    <h1>Find stillness<br>within.</h1>
+    <p class="hero-sub">A sanctuary for movement, breath, and presence. Drop in or join our community — wherever you are on your path.</p>
+    <a href="#classes" class="btn-sage">Explore Classes</a>
+    <a href="#schedule" class="btn-ghost">View Schedule</a>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=900&q=80" alt="Yoga practice">
+  </div>
+</section>
+
+<section class="section" id="classes">
+  <div class="container">
+    <p class="section-label">What We Offer</p>
+    <h2 class="section-title">Our Classes</h2>
+    <p class="section-sub">All levels welcome. Our teachers meet you where you are and guide you toward your edge — never beyond it.</p>
+    <div class="classes-grid">
+      <div class="class-card">
+        <div class="class-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Hatha Flow</h3>
+        <p>A grounding practice connecting breath with movement. Build strength, flexibility, and awareness through classical postures.</p>
+        <div class="class-meta">
+          <span>60 min</span>
+          <div class="level-dots"><div class="dot"></div><div class="dot"></div><div class="dot empty"></div></div>
+          <span>All levels</span>
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </div>
+        <h3>Yin Yoga</h3>
+        <p>Slow, floor-based practice targeting deep connective tissue. Holds of 3–5 minutes cultivate patience and deep release.</p>
+        <div class="class-meta">
+          <span>75 min</span>
+          <div class="level-dots"><div class="dot"></div><div class="dot empty"></div><div class="dot empty"></div></div>
+          <span>Beginner-friendly</span>
+        </div>
+      </div>
+      <div class="class-card">
+        <div class="class-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+        </div>
+        <h3>Meditation</h3>
+        <p>Guided sessions in mindfulness, body scan, and breath awareness. Suitable for complete beginners and long-time practitioners.</p>
+        <div class="class-meta">
+          <span>45 min</span>
+          <div class="level-dots"><div class="dot"></div><div class="dot empty"></div><div class="dot empty"></div></div>
+          <span>All levels</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section about-section" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <img class="about-img" src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&q=80" alt="Studio interior">
+      <div class="about-text">
+        <p class="section-label">Our Story</p>
+        <h2>A space that breathes.</h2>
+        <p>Roots Studio was founded in 2019 by Maya Chen, who spent years studying under teachers in Mysore, Bali, and New York before returning home to create a space rooted in community and tradition.</p>
+        <p>We believe yoga is not a performance — it is a practice. Our studio reflects that: warm, unhurried, and genuinely welcoming.</p>
+        <a href="#cta" class="btn-sage" style="margin-top:8px">Book a Class</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="schedule">
+  <div class="container">
+    <p class="section-label">Kind Words</p>
+    <h2 class="section-title">Our Community</h2>
+    <div class="testimonials">
+      <div class="testimonial">
+        <div class="quote-mark">"</div>
+        <p>Coming to Roots was one of the best decisions I've made for my mental health. The teachers are exceptional and the space feels like home.</p>
+        <div class="testimonial-name">SARAH M. &nbsp;&middot;&nbsp; Member since 2022</div>
+      </div>
+      <div class="testimonial">
+        <div class="quote-mark">"</div>
+        <p>I had never done yoga before. Maya made me feel completely at ease from day one. Three years later I'm still here, and I've never been more grounded.</p>
+        <div class="testimonial-name">DANIEL K. &nbsp;&middot;&nbsp; Member since 2021</div>
+      </div>
+      <div class="testimonial">
+        <div class="quote-mark">"</div>
+        <p>The Yin class has transformed how I recover from long work weeks. It's become non-negotiable for me — the physical and emotional release is real.</p>
+        <div class="testimonial-name">PRIYA L. &nbsp;&middot;&nbsp; Member since 2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="cta">
+  <h2>Your first class is free.</h2>
+  <p>No experience needed. No commitment required. Just show up.</p>
+  <a href="#" class="btn-white">Book Free Class</a>
+</section>
+
+<footer>
+  <div class="footer-logo">Roots Studio</div>
+  <ul class="footer-links">
+    <li><a href="#">Classes</a></li>
+    <li><a href="#">Schedule</a></li>
+    <li><a href="#">Workshops</a></li>
+    <li><a href="#">Instagram</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2026 Roots Studio. All rights reserved.</p>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+});
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.class-card,.about-img,.about-text,.testimonial').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

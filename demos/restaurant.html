@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison — Contemporary French Cuisine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #100C08;
+    --surface: #1C1510;
+    --gold: #C9A96E;
+    --cream: #F5EFE6;
+    --text: #F0E8DC;
+    --muted: #8A7060;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* Back to Gallery */
+  .back-link {
+    position: fixed;
+    top: 22px;
+    left: 22px;
+    z-index: 1000;
+    color: rgba(201,169,110,0.75);
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.3s;
+  }
+  .back-link:hover { color: var(--gold); }
+  .back-link svg { width: 13px; height: 13px; }
+
+  /* ORNAMENTAL SVG DIVIDER */
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0;
+  }
+  .ornament svg { display: block; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0 60px;
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 0 0;
+    position: relative;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .nav-left, .nav-right {
+    display: flex;
+    gap: 36px;
+    position: absolute;
+    list-style: none;
+  }
+  .nav-left { left: 0; }
+  .nav-right { right: 0; }
+  .nav-left a, .nav-right a {
+    color: rgba(240,232,220,0.75);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: 'Lato', sans-serif;
+    transition: color 0.3s;
+  }
+  .nav-left a:hover, .nav-right a:hover { color: var(--gold); }
+  .nav-rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,169,110,0.3), transparent);
+    margin-top: 20px;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80');
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(16,12,8,0.5) 0%, rgba(16,12,8,0.75) 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 24px;
+    max-width: 800px;
+  }
+  .hero-ornament {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.2s forwards;
+  }
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 7vw, 88px);
+    font-weight: 400;
+    line-height: 1.05;
+    color: var(--cream);
+    margin: 24px 0 20px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.5s forwards;
+  }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(240,232,220,0.75);
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.8s forwards;
+  }
+  .hero-ctas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 1.1s forwards;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .btn-gold {
+    display: inline-block;
+    padding: 14px 36px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-gold:hover {
+    background: var(--gold);
+    color: var(--bg);
+  }
+  .btn-text-link {
+    color: rgba(240,232,220,0.7);
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    border-bottom: 1px solid rgba(240,232,220,0.3);
+    padding-bottom: 2px;
+  }
+  .btn-text-link:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* SECTION COMMONS */
+  .section-label-gold {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 14px;
+  }
+  .section-title-serif {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4.5vw, 52px);
+    font-weight: 400;
+    color: var(--cream);
+  }
+
+  /* MENU HIGHLIGHTS */
+  .menu-section {
+    padding: 100px 60px;
+    background: var(--surface);
+  }
+  .menu-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .menu-card {
+    background: var(--bg);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .menu-card.is-visible { opacity: 1; transform: translateY(0); }
+  .menu-card:nth-child(2) { transition-delay: 0.12s; }
+  .menu-card:nth-child(3) { transition-delay: 0.24s; }
+  .menu-card:nth-child(4) { transition-delay: 0.36s; }
+
+  .menu-card-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .menu-card:hover .menu-card-img { transform: scale(1.04); }
+  .menu-card-body { padding: 22px 20px; }
+  .menu-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .menu-card-desc {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .menu-card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--gold);
+    margin-top: 14px;
+    font-style: italic;
+  }
+
+  /* ABOUT */
+  .about-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 560px;
+  }
+  .about-img {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s ease;
+  }
+  .about-img-wrap {
+    overflow: hidden;
+  }
+  .about-text {
+    padding: 80px 70px;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .about-text.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .about-text h2 { margin-bottom: 24px; }
+  .about-text p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(240,232,220,0.72);
+    margin-bottom: 18px;
+  }
+
+  /* AMBIANCE */
+  .ambiance {
+    position: relative;
+    height: 420px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .ambiance-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1400&q=80');
+    background-size: cover;
+    background-position: center;
+  }
+  .ambiance-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(16,12,8,0.85) 0%, rgba(16,12,8,0.3) 100%);
+  }
+  .ambiance-text {
+    position: relative;
+    z-index: 2;
+    padding: 60px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .ambiance-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .ambiance-text p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3.5vw, 36px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--gold);
+    max-width: 640px;
+  }
+
+  /* RESERVATION */
+  .reservation {
+    background: var(--surface);
+    padding: 100px 40px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reservation.is-visible { opacity: 1; transform: translateY(0); }
+  .reservation h2 { margin-bottom: 36px; }
+  .reservation-meta {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+  }
+  .res-meta-item { text-align: center; }
+  .res-meta-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .res-meta-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--text);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid rgba(201,169,110,0.12);
+    padding: 60px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: start;
+    gap: 40px;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    grid-column: 2;
+    text-align: center;
+  }
+  .footer-left { font-size: 13px; line-height: 1.8; color: var(--muted); }
+  .footer-right { font-size: 13px; line-height: 1.8; color: var(--muted); text-align: right; }
+  .footer-copy {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(138,112,96,0.5);
+    border-top: 1px solid rgba(201,169,110,0.08);
+    padding-top: 24px;
+    margin-top: 10px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .menu-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-inner { padding: 20px 0 0; flex-direction: column; gap: 12px; }
+    .nav-left, .nav-right { position: static; gap: 20px; }
+    .menu-section { padding: 80px 20px; }
+    .about-section { grid-template-columns: 1fr; }
+    .about-text { padding: 60px 28px; }
+    .about-img { min-height: 280px; }
+    .ambiance-text { padding: 40px 24px; }
+    .reservation { padding: 80px 24px; }
+    footer { grid-template-columns: 1fr; padding: 40px 24px; }
+    .footer-logo { grid-column: 1; text-align: left; }
+    .footer-right { text-align: left; }
+    .hero-ctas { flex-direction: column; gap: 20px; }
+    .reservation-meta { gap: 32px; }
+  }
+  @media (max-width: 520px) {
+    .menu-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Back to Gallery -->
+<a href="../index.html" class="back-link">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 3L5 8l5 5"/>
+  </svg>
+  Back to Gallery
+</a>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <ul class="nav-left">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#reservation">Reservations</a></li>
+    </ul>
+    <a href="#" class="nav-logo">Maison</a>
+    <ul class="nav-right">
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+  <div class="nav-rule"></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-ornament">
+      <!-- Ornamental SVG line -->
+      <svg width="240" height="18" viewBox="0 0 240 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="9" x2="104" y2="9" stroke="#C9A96E" stroke-width="0.75" stroke-opacity="0.6"/>
+        <circle cx="120" cy="9" r="3.5" stroke="#C9A96E" stroke-width="0.75" stroke-opacity="0.8" fill="none"/>
+        <circle cx="120" cy="9" r="1" fill="#C9A96E" fill-opacity="0.7"/>
+        <line x1="136" y1="9" x2="240" y2="9" stroke="#C9A96E" stroke-width="0.75" stroke-opacity="0.6"/>
+      </svg>
+    </div>
+    <h1 class="hero-headline">A Table Worth<br>Remembering</h1>
+    <p class="hero-sub">Contemporary French cuisine in the heart of the city</p>
+    <div class="hero-ctas">
+      <a href="#reservation" class="btn-gold">Reserve a Table</a>
+      <a href="#menu" class="btn-text-link">View Menu</a>
+    </div>
+  </div>
+</section>
+
+<!-- ORNAMENT DIVIDER -->
+<div class="ornament" style="background: var(--bg); padding: 48px 0 36px;">
+  <svg width="300" height="18" viewBox="0 0 300 18" fill="none">
+    <line x1="0" y1="9" x2="134" y2="9" stroke="#C9A96E" stroke-width="0.6" stroke-opacity="0.4"/>
+    <circle cx="150" cy="9" r="4" stroke="#C9A96E" stroke-width="0.6" stroke-opacity="0.6" fill="none"/>
+    <circle cx="150" cy="9" r="1.2" fill="#C9A96E" fill-opacity="0.5"/>
+    <line x1="166" y1="9" x2="300" y2="9" stroke="#C9A96E" stroke-width="0.6" stroke-opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- MENU HIGHLIGHTS -->
+<section class="menu-section" id="menu">
+  <div class="menu-header">
+    <span class="section-label-gold">À la Carte</span>
+    <h2 class="section-title-serif">Signature Dishes</h2>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <img class="menu-card-img" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&q=80" alt="Duck Confit" loading="lazy">
+      <div class="menu-card-body">
+        <div class="menu-card-name">Duck Confit</div>
+        <p class="menu-card-desc">Slow-cooked Challans duck leg, Puy lentils, black truffle jus, crispy shallots</p>
+        <div class="menu-card-price">£38</div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <img class="menu-card-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80" alt="Rack of Lamb" loading="lazy">
+      <div class="menu-card-body">
+        <div class="menu-card-name">Rack of Lamb</div>
+        <p class="menu-card-desc">Herb-crusted Pyrenean lamb, flageolet beans, rosemary jus, spring greens</p>
+        <div class="menu-card-price">£44</div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <img class="menu-card-img" src="https://images.unsplash.com/photo-1555126634-323283e090fa?w=500&q=80" alt="Crème Brûlée" loading="lazy">
+      <div class="menu-card-body">
+        <div class="menu-card-name">Crème Brûlée</div>
+        <p class="menu-card-desc">Tahitian vanilla custard, caramelised sugar, seasonal berries, shortbread tuile</p>
+        <div class="menu-card-price">£14</div>
+      </div>
+    </div>
+    <div class="menu-card">
+      <img class="menu-card-img" src="https://images.unsplash.com/photo-1510130387422-82bed34b37e9?w=500&q=80" alt="Truffle Risotto" loading="lazy">
+      <div class="menu-card-body">
+        <div class="menu-card-name">Truffle Risotto</div>
+        <p class="menu-card-desc">Carnaroli rice, black Périgord truffle, aged Parmesan, white wine, mascarpone</p>
+        <div class="menu-card-price">£32</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORNAMENT DIVIDER -->
+<div class="ornament" style="background: var(--bg); padding: 48px 0;">
+  <svg width="300" height="18" viewBox="0 0 300 18" fill="none">
+    <line x1="0" y1="9" x2="134" y2="9" stroke="#C9A96E" stroke-width="0.6" stroke-opacity="0.3"/>
+    <circle cx="150" cy="9" r="4" stroke="#C9A96E" stroke-width="0.6" stroke-opacity="0.5" fill="none"/>
+    <circle cx="150" cy="9" r="1.2" fill="#C9A96E" fill-opacity="0.4"/>
+    <line x1="166" y1="9" x2="300" y2="9" stroke="#C9A96E" stroke-width="0.6" stroke-opacity="0.3"/>
+  </svg>
+</div>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-img-wrap">
+    <img class="about-img" src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=700&q=80" alt="Chef at work" loading="lazy">
+  </div>
+  <div class="about-text">
+    <span class="section-label-gold">Our Story</span>
+    <h2 class="section-title-serif">Craft. Patience.<br>Precision.</h2>
+    <p>Chef Laurent Beaumont trained under three Michelin-starred kitchens before opening Maison in 2018. His philosophy is simple: let exceptional ingredients speak for themselves. Every dish is built on classical French technique, then refined with the restraint of someone who knows when to stop.</p>
+    <p>Maison seats 48 guests across two intimate dining rooms. The space was designed to feel like a private home — somewhere to linger, to talk, and to eat food that stays with you long after the bill is paid.</p>
+  </div>
+</section>
+
+<!-- AMBIANCE -->
+<div class="ambiance">
+  <div class="ambiance-bg"></div>
+  <div class="ambiance-overlay"></div>
+  <div class="ambiance-text">
+    <p>Private dining available for groups of 8–20. Bespoke menus crafted for every occasion.</p>
+  </div>
+</div>
+
+<!-- RESERVATION CTA -->
+<section class="reservation" id="reservation">
+  <span class="section-label-gold">Bookings</span>
+  <h2 class="section-title-serif">Reserve Your Table</h2>
+  <a href="tel:+442071234567" class="btn-gold" style="margin-top: 32px; display: inline-block;">+44 20 7123 4567</a>
+  <div class="reservation-meta">
+    <div class="res-meta-item">
+      <span class="res-meta-label">Lunch</span>
+      <span class="res-meta-value">Tuesday – Saturday, 12–2:30 pm</span>
+    </div>
+    <div class="res-meta-item">
+      <span class="res-meta-label">Dinner</span>
+      <span class="res-meta-value">Tuesday – Sunday, 6:30–10 pm</span>
+    </div>
+    <div class="res-meta-item">
+      <span class="res-meta-label">Location</span>
+      <span class="res-meta-value">14 Rue Saint-Georges, London</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-left">
+    <p>14 Rue Saint-Georges<br>Marylebone, London W1G 8NP</p>
+    <p style="margin-top: 16px;">hello@maisonlondon.co</p>
+  </div>
+  <div class="footer-logo">Maison</div>
+  <div class="footer-right">
+    <p>Lunch: Tue–Sat, 12–2:30 pm</p>
+    <p>Dinner: Tue–Sun, 6:30–10 pm</p>
+    <p style="margin-top: 16px;">+44 20 7123 4567</p>
+  </div>
+  <div class="footer-copy">&copy; 2026 Maison London. All rights reserved.</div>
+</footer>
+
+<script>
+  // IntersectionObserver for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.menu-card, .about-text, .ambiance-text, .reservation').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Parallax on about image
+  const aboutImg = document.querySelector('.about-img');
+  if (aboutImg) {
+    window.addEventListener('scroll', () => {
+      const rect = aboutImg.closest('.about-section').getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const pct = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        aboutImg.style.transform = `translateY(${(pct - 0.5) * -40}px)`;
+      }
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>

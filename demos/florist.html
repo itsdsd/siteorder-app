@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloom — Bespoke Floral Arrangements</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFF8F5;
+    --surface: #FFF0EB;
+    --green: #2D5A27;
+    --green-light: #4A7A43;
+    --pink: #E8A0B0;
+    --dark: #1A2E18;
+    --text: #3D2B35;
+    --muted: #9A7A85;
+    --border: #EAD9D0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* FLOATING PETALS */
+  .petals-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .petal {
+    position: absolute;
+    opacity: 0;
+    animation: floatPetal linear infinite;
+  }
+
+  @keyframes floatPetal {
+    0% { opacity: 0; transform: translateY(100vh) rotate(0deg); }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.4; }
+    100% { opacity: 0; transform: translateY(-20px) rotate(360deg); }
+  }
+
+  /* BACK LINK */
+  .back-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: white;
+    color: var(--green);
+    text-decoration: none;
+    padding: 9px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 400;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(45,90,39,0.08);
+  }
+  .back-link:hover { background: var(--surface); border-color: var(--pink); color: var(--dark); }
+  .back-link svg { width: 14px; height: 14px; }
+
+  /* NAV */
+  nav {
+    background: var(--surface);
+    padding: 18px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-wordmark {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 22px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 300;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--green); }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 88vh;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-left {
+    background: var(--bg);
+    padding: 80px 64px 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Botanical SVG branch decoration */
+  .botanical-deco {
+    position: absolute;
+    top: -40px;
+    right: -30px;
+    width: 280px;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  .botanical-branch {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    animation: drawBranch 3.5s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+  }
+
+  @keyframes drawBranch {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .hero-left .label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 24px;
+    animation: fadeInUp 0.8s 0.2s ease both;
+  }
+
+  .hero-left h1 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: clamp(32px, 3.5vw, 54px);
+    font-weight: 200;
+    letter-spacing: 2px;
+    color: var(--dark);
+    line-height: 1.25;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.8s 0.3s ease both;
+  }
+
+  .hero-left p {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 320px;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.8s 0.45s ease both;
+  }
+
+  .btn-green {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    text-decoration: none;
+    padding: 14px 36px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: all 0.4s ease;
+    align-self: flex-start;
+    border: 2px solid var(--green);
+    animation: fadeInUp 0.8s 0.55s ease both;
+  }
+
+  .btn-green:hover { background: transparent; color: var(--green); }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-right {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 8s ease;
+  }
+
+  .hero-right:hover img { transform: scale(1.03); }
+
+  /* COLLECTIONS */
+  .collections-section {
+    padding: 100px 60px;
+    background: white;
+    position: relative;
+    z-index: 1;
+  }
+
+  .collections-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .collections-header .eyebrow {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--pink);
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .collections-header h2 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: clamp(26px, 3vw, 42px);
+    font-weight: 200;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dark);
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .product-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+    opacity: 0;
+    transform: scale(0.97) translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+  }
+
+  .product-card.is-visible { opacity: 1; transform: scale(1) translateY(0); }
+  .product-card:nth-child(1) { transition-delay: 0s; }
+  .product-card:nth-child(2) { transition-delay: 0.1s; }
+  .product-card:nth-child(3) { transition-delay: 0.2s; }
+  .product-card:nth-child(4) { transition-delay: 0.3s; }
+
+  .product-card:hover { box-shadow: 0 20px 60px rgba(45,90,39,0.12); }
+
+  .product-img-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+
+  .product-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .product-card:hover .product-img-wrap img { transform: scale(1.05); }
+
+  .product-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(45,90,39,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .product-card:hover .product-overlay { opacity: 1; }
+
+  .overlay-btn {
+    color: white;
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 10px 24px;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .overlay-btn:hover { background: white; color: var(--green); }
+
+  .product-info {
+    padding: 18px 0 4px;
+  }
+
+  .product-name {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  .product-price {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: var(--green);
+  }
+
+  /* ABOUT */
+  .about-section {
+    padding: 100px 60px;
+    background: var(--surface);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-quote {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: clamp(20px, 2.5vw, 32px);
+    color: var(--dark);
+    max-width: 700px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+
+  .about-text {
+    font-family: 'Lora', serif;
+    color: var(--muted);
+    font-size: 16px;
+    max-width: 580px;
+    margin: 0 auto 48px;
+    line-height: 1.9;
+  }
+
+  .about-img {
+    width: 100%;
+    max-width: 680px;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* SERVICES */
+  .services-section {
+    padding: 100px 60px;
+    background: white;
+    position: relative;
+    z-index: 1;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    max-width: 900px;
+    margin: 64px auto 0;
+    text-align: center;
+  }
+
+  .service-item {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .service-item.is-visible { opacity: 1; transform: translateY(0); }
+  .service-item:nth-child(1) { transition-delay: 0s; }
+  .service-item:nth-child(2) { transition-delay: 0.15s; }
+  .service-item:nth-child(3) { transition-delay: 0.3s; }
+
+  .service-icon {
+    width: 56px; height: 56px;
+    background: var(--surface);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    border: 1px solid var(--border);
+  }
+
+  .service-icon svg { width: 24px; height: 24px; color: var(--green); }
+
+  .service-name {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+
+  .service-desc {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  /* GALLERY */
+  .gallery-section {
+    padding: 80px 60px;
+    background: var(--bg);
+    position: relative;
+    z-index: 1;
+  }
+
+  .gallery-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .gallery-item {
+    aspect-ratio: 1;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .gallery-item.is-visible { opacity: 1; }
+  .gallery-item:nth-child(1) { transition-delay: 0s; }
+  .gallery-item:nth-child(2) { transition-delay: 0.08s; }
+  .gallery-item:nth-child(3) { transition-delay: 0.16s; }
+  .gallery-item:nth-child(4) { transition-delay: 0.24s; }
+  .gallery-item:nth-child(5) { transition-delay: 0.32s; }
+  .gallery-item:nth-child(6) { transition-delay: 0.40s; }
+
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .gallery-item:hover img { transform: scale(1.06); }
+
+  /* NEWSLETTER */
+  .newsletter-section {
+    background: var(--surface);
+    padding: 90px 60px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .newsletter-section h2 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: clamp(22px, 2.5vw, 36px);
+    font-weight: 200;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+
+  .newsletter-section p {
+    color: var(--muted);
+    font-size: 15px;
+    font-style: italic;
+    margin-bottom: 36px;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 0;
+    max-width: 460px;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+    background: white;
+    overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .newsletter-form:focus-within {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(45,90,39,0.08);
+  }
+
+  .newsletter-input {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    outline: none;
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    color: var(--text);
+    background: transparent;
+  }
+
+  .newsletter-input::placeholder { color: var(--muted); }
+
+  .newsletter-btn {
+    padding: 14px 24px;
+    background: var(--green);
+    border: none;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s;
+    white-space: nowrap;
+  }
+
+  .newsletter-btn:hover { background: var(--green-light); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.5);
+    padding: 60px 60px 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 32px;
+  }
+
+  .footer-brand .wordmark {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 200;
+    font-size: 20px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--pink);
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .footer-brand p {
+    font-size: 14px;
+    line-height: 1.8;
+    max-width: 260px;
+  }
+
+  .footer-col h4 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col ul li { margin-bottom: 10px; }
+
+  .footer-col ul li a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-size: 14px;
+    font-family: 'Lora', serif;
+    transition: color 0.3s;
+  }
+
+  .footer-col ul li a:hover { color: rgba(255,255,255,0.75); }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  /* Section headers shared */
+  .section-title-block {
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .eyebrow {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--pink);
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .section-title-block h2 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 200;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dark);
+  }
+
+  /* Fade-up utility */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .fade-up.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 60px 24px; }
+    .hero-right { height: 320px; }
+    .botanical-deco { display: none; }
+
+    .collections-section { padding: 70px 24px; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+    .about-section { padding: 70px 24px; }
+
+    .services-section { padding: 70px 24px; }
+    .services-grid { grid-template-columns: 1fr; gap: 32px; }
+
+    .gallery-section { padding: 60px 24px; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .newsletter-section { padding: 70px 24px; }
+    .newsletter-form { flex-direction: column; }
+    .newsletter-btn { text-align: center; }
+
+    footer { padding: 48px 24px 28px; }
+    .footer-top { grid-template-columns: 1fr; gap: 36px; }
+
+    .back-link { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- FLOATING PETALS -->
+<div class="petals-container" aria-hidden="true">
+  <!-- Petals injected by JS -->
+</div>
+
+<a href="../index.html" class="back-link">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+  Back to Gallery
+</a>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <!-- Botanical leaf icon -->
+    <svg width="22" height="22" viewBox="0 0 40 40" fill="none" style="flex-shrink:0;">
+      <path d="M20 36 C20 36 6 26 6 14 C6 7 12 4 20 4 C28 4 34 7 34 14 C34 26 20 36 20 36Z" fill="none" stroke="#2D5A27" stroke-width="1.5"/>
+      <path d="M20 36 L20 14" stroke="#2D5A27" stroke-width="1.2" stroke-dasharray="2,2"/>
+      <path d="M20 22 C16 20 13 16 14 12" stroke="#2D5A27" stroke-width="1" fill="none"/>
+      <path d="M20 18 C24 16 27 12 26 8" stroke="#2D5A27" stroke-width="1" fill="none"/>
+    </svg>
+    <span class="nav-wordmark">Bloom</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#collections">Shop</a></li>
+    <li><a href="#arrangements">Arrangements</a></li>
+    <li><a href="#services">Events</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <!-- Botanical SVG decoration -->
+    <svg class="botanical-deco" viewBox="0 0 280 380" xmlns="http://www.w3.org/2000/svg">
+      <path class="botanical-branch" d="
+        M140 360 C140 360 140 280 140 220
+        C140 220 140 180 120 160
+        C100 140 80 148 70 130
+        C60 112 72 90 60 75
+        C48 60 30 58 24 42
+        M140 220 C140 220 155 195 170 175
+        C185 155 195 148 200 130
+        C205 112 198 95 205 80
+        C212 65 228 60 230 44
+        M140 280 C140 280 118 265 105 248
+        C92 231 90 215 78 202
+        C66 189 50 188 44 172
+        M140 260 C140 260 162 245 175 228
+        C188 211 190 196 202 183
+        C214 170 230 169 234 154
+        M140 320 C140 320 125 305 115 288
+        C105 271 106 255 95 242
+        M140 300 C140 300 156 286 164 270
+        C172 254 170 239 180 226
+      "/>
+      <!-- Small leaf shapes -->
+      <ellipse cx="60" cy="74" rx="10" ry="6" transform="rotate(-30 60 74)" fill="none" stroke="#2D5A27" stroke-width="1"/>
+      <ellipse cx="200" cy="78" rx="10" ry="6" transform="rotate(25 200 78)" fill="none" stroke="#2D5A27" stroke-width="1"/>
+      <ellipse cx="44" cy="170" rx="10" ry="6" transform="rotate(-20 44 170)" fill="none" stroke="#2D5A27" stroke-width="1"/>
+      <ellipse cx="232" cy="152" rx="10" ry="6" transform="rotate(20 232 152)" fill="none" stroke="#2D5A27" stroke-width="1"/>
+      <!-- Small flower circles -->
+      <circle cx="24" cy="40" r="5" fill="none" stroke="#E8A0B0" stroke-width="1"/>
+      <circle cx="230" cy="42" r="5" fill="none" stroke="#E8A0B0" stroke-width="1"/>
+      <circle cx="95" cy="240" r="4" fill="none" stroke="#E8A0B0" stroke-width="1"/>
+    </svg>
+
+    <div class="label">Boutique Florals · Seasonal Blooms</div>
+    <h1>Flowers For<br>Every Moment</h1>
+    <p>Bespoke arrangements crafted with seasonal blooms, designed to make every occasion unforgettable.</p>
+    <a href="#collections" class="btn-green">Shop Now</a>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1487530811015-780780cc87ab?w=800&q=80" alt="Beautiful floral arrangement">
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section class="collections-section" id="collections">
+  <div class="collections-header fade-up">
+    <span class="eyebrow">Curated for you</span>
+    <h2>Our Collections</h2>
+  </div>
+  <div class="product-grid" id="arrangements">
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://images.unsplash.com/photo-1490750967868-88df5691cc95?w=400&q=80" alt="Garden Romance arrangement">
+        <div class="product-overlay">
+          <button class="overlay-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Garden Romance</div>
+        <div class="product-price">$85</div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?w=400&q=80" alt="Wild Meadow arrangement">
+        <div class="product-overlay">
+          <button class="overlay-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Wild Meadow</div>
+        <div class="product-price">$65</div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Sunset Hues arrangement">
+        <div class="product-overlay">
+          <button class="overlay-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Sunset Hues</div>
+        <div class="product-price">$95</div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&q=80" alt="Classic White arrangement">
+        <div class="product-overlay">
+          <button class="overlay-btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Classic White</div>
+        <div class="product-price">$75</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="fade-up">
+    <p class="about-quote">"Every bloom tells a story. Every arrangement is a small act of love."</p>
+    <p class="about-text">Founded in 2011, Bloom is a boutique floral studio rooted in the belief that flowers have the power to transform any space and uplift any spirit. We source locally whenever possible, working with small farms to bring you the freshest seasonal varieties arranged by hand in our studio.</p>
+    <img src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?w=700&q=80" alt="Bloom studio at work" class="about-img">
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="section-title-block fade-up">
+    <span class="eyebrow">What we offer</span>
+    <h2>How we can help</h2>
+  </div>
+  <div class="services-grid">
+
+    <div class="service-item">
+      <div class="service-icon">
+        <!-- Delivery van SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <div class="service-name">Same-Day Delivery</div>
+      <p class="service-desc">Order by 2 pm for same-day delivery across the city. Fresh arrangements delivered with care.</p>
+    </div>
+
+    <div class="service-item">
+      <div class="service-icon">
+        <!-- Ring/wedding SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div class="service-name">Wedding Florals</div>
+      <p class="service-desc">From intimate ceremonies to grand receptions, we craft a floral vision as unique as your love story.</p>
+    </div>
+
+    <div class="service-item">
+      <div class="service-icon">
+        <!-- Building/corporate SVG -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div class="service-name">Corporate Events</div>
+      <p class="service-desc">Elevate your workspace or event with standing arrangements, centerpieces, and recurring subscriptions.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section">
+  <div class="gallery-header fade-up">
+    <span class="eyebrow">Follow @bloomstudio</span>
+    <h2 style="font-family:'Josefin Sans',sans-serif; font-weight:200; letter-spacing:3px; text-transform:uppercase; color:var(--dark); font-size:clamp(22px,2.5vw,34px);">In Bloom</h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1490750967868-88df5691cc95?w=400&q=80" alt="Floral gallery"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1487530811015-780780cc87ab?w=400&q=80" alt="Floral gallery"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?w=400&q=80" alt="Floral gallery"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&q=80" alt="Floral gallery"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Floral gallery"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?w=400&q=80" alt="Floral gallery"></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="fade-up">
+    <h2>Join our garden.</h2>
+    <p>Get 10% off your first order and be first to know about seasonal arrivals.</p>
+    <form class="newsletter-form" onsubmit="return false;">
+      <input type="email" class="newsletter-input" placeholder="Your email address">
+      <button type="submit" class="newsletter-btn">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="wordmark">Bloom</span>
+      <p>A boutique floral studio crafting bespoke arrangements since 2011. Every flower, every stem, chosen with intention.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">All Arrangements</a></li>
+        <li><a href="#">Seasonal</a></li>
+        <li><a href="#">Gifts</a></li>
+        <li><a href="#">Wedding</a></li>
+        <li><a href="#">Subscriptions</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">The Team</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Bloom Floral Studio. All rights reserved.</p>
+    <p>142 West 14th Street, New York, NY 10011</p>
+  </div>
+</footer>
+
+<script>
+  // IntersectionObserver for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.fade-up, .product-card, .service-item, .gallery-item').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Floating petals
+  const petalContainer = document.querySelector('.petals-container');
+  const petalColors = ['#E8A0B0', '#F5C5D0', '#D4E8C0', '#FFD6CC', '#EBC5C5'];
+  const petalCount = 12;
+
+  for (let i = 0; i < petalCount; i++) {
+    const petal = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const size = Math.random() * 10 + 6;
+    petal.setAttribute('width', size);
+    petal.setAttribute('height', size);
+    petal.setAttribute('viewBox', '0 0 20 20');
+    petal.classList.add('petal');
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+    circle.setAttribute('cx', '10');
+    circle.setAttribute('cy', '10');
+    circle.setAttribute('rx', '8');
+    circle.setAttribute('ry', '5');
+    circle.setAttribute('fill', petalColors[Math.floor(Math.random() * petalColors.length)]);
+    circle.setAttribute('opacity', '0.7');
+    petal.appendChild(circle);
+
+    const left = Math.random() * 100;
+    const delay = Math.random() * 20;
+    const duration = Math.random() * 14 + 12;
+
+    petal.style.left = left + 'vw';
+    petal.style.bottom = '-20px';
+    petal.style.animationDuration = duration + 's';
+    petal.style.animationDelay = delay + 's';
+
+    petalContainer.appendChild(petal);
+  }
+</script>
+
+</body>
+</html>

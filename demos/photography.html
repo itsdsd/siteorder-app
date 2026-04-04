@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lens & Light Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0F0F0F;
+    --surface: #1A1A1A;
+    --text: #FFFFFF;
+    --muted: #777;
+    --accent: #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* Back to Gallery */
+  .back-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.3s;
+    mix-blend-mode: difference;
+  }
+  .back-link:hover { color: #fff; }
+  .back-link svg { width: 14px; height: 14px; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 60px;
+    transition: background 0.4s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(15,15,15,0.96);
+    padding: 18px 60px;
+    backdrop-filter: blur(8px);
+  }
+  .nav-logo {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: #fff; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1400&q=80');
+    background-size: cover;
+    background-position: center;
+    animation: kenBurns 8s ease-in-out infinite alternate;
+  }
+  @keyframes kenBurns {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.6) 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 20px;
+  }
+  .hero-category {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 24px;
+    display: block;
+  }
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 7vw, 90px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: #fff;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .scroll-indicator span {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .scroll-arrow {
+    animation: bounceArrow 2s ease-in-out infinite;
+  }
+  @keyframes bounceArrow {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(8px); opacity: 1; }
+  }
+
+  /* PORTFOLIO */
+  .section-header {
+    text-align: center;
+    padding: 100px 40px 60px;
+  }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 300;
+    color: #fff;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    padding: 0 2px 2px;
+  }
+  .portfolio-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .portfolio-item.is-visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .portfolio-item:nth-child(1) { transition-delay: 0s; }
+  .portfolio-item:nth-child(2) { transition-delay: 0.1s; }
+  .portfolio-item:nth-child(3) { transition-delay: 0.2s; }
+  .portfolio-item:nth-child(4) { transition-delay: 0.3s; }
+  .portfolio-item:nth-child(5) { transition-delay: 0.4s; }
+  .portfolio-item:nth-child(6) { transition-delay: 0.5s; }
+
+  .portfolio-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s ease;
+  }
+  .portfolio-item:hover img {
+    transform: scale(1.05);
+  }
+  .portfolio-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 28px;
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .portfolio-item:hover .portfolio-overlay {
+    transform: translateY(0);
+  }
+  .portfolio-overlay-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .portfolio-overlay-cat {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 100px 60px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px;
+    max-width: 960px;
+    margin: 60px auto 0;
+  }
+  .service-item {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .service-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .service-item:nth-child(2) { transition-delay: 0.15s; }
+  .service-item:nth-child(3) { transition-delay: 0.3s; }
+
+  .service-line {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+    margin-bottom: 28px;
+  }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .service-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* ABOUT */
+  .about {
+    background: var(--surface);
+    padding: 120px 40px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .about.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 300;
+    font-style: italic;
+    color: #fff;
+    max-width: 800px;
+    margin: 0 auto 32px;
+    line-height: 1.3;
+  }
+  .about-attr {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+  .about-bio {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  /* CONTACT CTA */
+  .contact-cta {
+    padding: 120px 40px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .contact-cta.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .contact-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 300;
+    font-style: italic;
+    color: #fff;
+    margin-bottom: 40px;
+  }
+  .btn-outline {
+    display: inline-block;
+    padding: 14px 40px;
+    border: 1px solid rgba(255,255,255,0.5);
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: #fff;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-brand {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { gap: 20px; }
+    .nav-links li:last-child { display: none; }
+    .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+    .services { padding: 80px 24px; }
+    .services-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about { padding: 80px 24px; }
+    .contact-cta { padding: 80px 24px; }
+    footer { padding: 30px 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .portfolio-item { aspect-ratio: 4/3; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Back to Gallery -->
+<a href="../index.html" class="back-link">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 3L5 8l5 5"/>
+  </svg>
+  Back to Gallery
+</a>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">Lens &amp; Light</a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-category">Photography Studio</span>
+    <h1 class="hero-headline">Capturing Moments That Last Forever</h1>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <svg class="scroll-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 4v12M4 10l6 6 6-6"/>
+    </svg>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-header">
+    <span class="section-label">Our Work</span>
+    <h2 class="section-title">Selected Work</h2>
+  </div>
+  <div class="portfolio-grid">
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Alpine Peaks" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">Alpine Peaks</div>
+        <div class="portfolio-overlay-cat">Landscape</div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80" alt="Golden Horizon" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">Golden Horizon</div>
+        <div class="portfolio-overlay-cat">Nature</div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80" alt="Forest Light" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">Forest Light</div>
+        <div class="portfolio-overlay-cat">Woodland</div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80" alt="Aerial Vista" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">Aerial Vista</div>
+        <div class="portfolio-overlay-cat">Landscape</div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=600&q=80" alt="Desert Dunes" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">Desert Dunes</div>
+        <div class="portfolio-overlay-cat">Fine Art</div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=600&q=80" alt="Wildflowers" loading="lazy">
+      <div class="portfolio-overlay">
+        <div class="portfolio-overlay-title">Wildflowers</div>
+        <div class="portfolio-overlay-cat">Nature</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header">
+    <span class="section-label">What We Offer</span>
+    <h2 class="section-title">Services</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-item">
+      <div class="service-line"></div>
+      <div class="service-name">Portrait</div>
+      <p class="service-desc">Intimate, authentic portraits that reveal character. Whether personal branding, family sessions, or editorial work — we capture the real you in light that feels natural and honest.</p>
+    </div>
+    <div class="service-item">
+      <div class="service-line"></div>
+      <div class="service-name">Wedding</div>
+      <p class="service-desc">Unobtrusive, documentary-style wedding coverage. We become invisible so you can live the moment freely — and find the photographs waiting for you on the other side.</p>
+    </div>
+    <div class="service-item">
+      <div class="service-line"></div>
+      <div class="service-name">Commercial</div>
+      <p class="service-desc">Product, architecture, and campaign photography built for brands with high standards. Clean, purposeful images that communicate value before a single word is read.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <blockquote class="about-quote">"Every photograph is a certificate of presence."</blockquote>
+  <p class="about-attr">— Roland Barthes</p>
+  <p class="about-bio">Founded in 2014 by Elise Marchand, Lens &amp; Light is a photography studio based in Copenhagen. We work with individuals, couples, and brands who believe images should carry weight — not just beauty. Our approach is slow, considered, and always rooted in the quality of light.</p>
+</section>
+
+<!-- CONTACT CTA -->
+<section class="contact-cta" id="contact">
+  <h2 class="contact-headline">Let's create something beautiful.</h2>
+  <a href="mailto:hello@lensandlight.co" class="btn-outline">Get in Touch</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-brand">Lens &amp; Light Photography</span>
+  <span class="footer-copy">&copy; 2026. All rights reserved.</span>
+</footer>
+
+<script>
+  // Scroll nav
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // IntersectionObserver for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.portfolio-item, .service-item, .about, .contact-cta').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

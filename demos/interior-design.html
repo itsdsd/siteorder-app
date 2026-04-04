@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier — Interior Design Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F5F0EB;--surface:#EDE8E0;--dark:#2C2420;--accent:#8B6F5E;--text:#3D3530;--muted:#9A8A84;--warm:#C4A882}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+.back-link{position:fixed;top:20px;left:20px;z-index:1000;background:rgba(44,36,32,0.08);color:var(--dark);padding:8px 16px;font-size:0.78rem;letter-spacing:0.06em;border:1px solid rgba(44,36,32,0.15);transition:all 0.3s}
+.back-link:hover{background:rgba(44,36,32,0.15)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 48px;height:72px;display:flex;align-items:center;justify-content:space-between;background:rgba(245,240,235,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(44,36,32,0.08)}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--dark);letter-spacing:0.04em}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:0.82rem;color:var(--muted);transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--dark);transition:width 0.3s}
+.nav-links a:hover{color:var(--dark)}.nav-links a:hover::after{width:100%}
+.nav-cta{font-size:0.82rem;color:var(--accent);font-weight:500;text-decoration:underline;text-underline-offset:3px;transition:color 0.2s}
+.nav-cta:hover{color:var(--dark)}
+
+.hero{min-height:100vh;display:grid;grid-template-columns:3fr 2fr;padding-top:72px}
+.hero-img-wrap{position:relative;overflow:hidden}
+.hero-img{width:100%;height:100%;min-height:calc(100vh - 72px);object-fit:cover;transition:transform 0.8s ease}
+.hero-img-wrap:hover .hero-img{transform:scale(1.04)}
+.hero-right{padding:64px 48px;display:flex;flex-direction:column;justify-content:center;background:var(--bg)}
+.hero-studio{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm);margin-bottom:12px}
+.hero-est{font-size:0.72rem;color:var(--muted);margin-bottom:32px;letter-spacing:0.08em}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,4vw,3.2rem);line-height:1.2;color:var(--dark);margin-bottom:24px}
+.hero-sub{color:var(--muted);font-size:0.95rem;font-weight:300;margin-bottom:40px;line-height:1.8}
+.btn-dark{display:inline-block;background:var(--dark);color:#fff;padding:14px 36px;font-size:0.82rem;letter-spacing:0.06em;transition:all 0.3s}
+.btn-dark:hover{background:var(--accent);transform:translateY(-1px)}
+
+.section{padding:96px 48px}
+.container{max-width:1200px;margin:0 auto}
+.section-label{font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--warm);margin-bottom:12px}
+.section-title{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);color:var(--dark);margin-bottom:48px;line-height:1.2}
+
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:16px}
+.project-card{position:relative;overflow:hidden;cursor:pointer}
+.project-card.large{grid-row:span 1}
+.project-img{width:100%;height:360px;object-fit:cover;transition:transform 0.6s ease}
+.project-card:hover .project-img{transform:scale(1.06)}
+.project-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(44,36,32,0.85) 0%,transparent 50%);opacity:0;transition:opacity 0.4s}
+.project-card:hover .project-overlay{opacity:1}
+.project-info{position:absolute;bottom:0;left:0;right:0;padding:28px;transform:translateY(8px);transition:transform 0.4s;opacity:0}
+.project-card:hover .project-info{opacity:1;transform:translateY(0)}
+.project-name{font-family:'DM Serif Display',serif;font-size:1.3rem;color:#fff}
+.project-type{font-size:0.72rem;color:rgba(255,255,255,0.6);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px}
+
+.services{background:var(--surface)}
+.services-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(44,36,32,0.1)}
+.service-item{padding:40px 28px;border-right:1px solid rgba(44,36,32,0.1);transition:background 0.3s;opacity:0;transform:translateY(20px);transition:background 0.3s,opacity 0.6s,transform 0.6s}
+.service-item.visible{opacity:1;transform:translateY(0)}
+.service-item:nth-child(2){transition-delay:0.1s}
+.service-item:nth-child(3){transition-delay:0.2s}
+.service-item:nth-child(4){transition-delay:0.3s;border-right:none}
+.service-item:hover{background:rgba(44,36,32,0.04)}
+.service-item h3{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--dark);margin-bottom:10px}
+.service-item p{font-size:0.85rem;color:var(--muted);font-weight:300;line-height:1.7}
+
+.process-section{padding:96px 48px}
+.process-steps{display:flex;flex-direction:column;gap:0;max-width:900px;margin:0 auto}
+.process-step{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:64px 0;border-top:1px solid rgba(44,36,32,0.1);opacity:0;transition:opacity 0.7s,transform 0.7s}
+.process-step:nth-child(odd){transform:translateX(-28px)}
+.process-step:nth-child(even){transform:translateX(28px)}
+.process-step.visible{opacity:1;transform:translateX(0)}
+.process-step:nth-child(even) .step-text{order:2}.process-step:nth-child(even) .step-img{order:1}
+.step-num{font-family:'DM Serif Display',serif;font-size:4rem;color:rgba(196,168,130,0.3);line-height:1;margin-bottom:12px}
+.step-text h3{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--dark);margin-bottom:12px}
+.step-text p{color:var(--muted);font-weight:300;line-height:1.8}
+.step-img img{width:100%;height:280px;object-fit:cover}
+
+.studio-quote{background:var(--dark);padding:96px 48px;text-align:center;position:relative;overflow:hidden}
+.studio-quote::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80') center/cover;opacity:0.08}
+.studio-quote blockquote{position:relative;font-family:'DM Serif Display',serif;font-size:clamp(1.6rem,3vw,2.4rem);color:#fff;font-style:italic;max-width:700px;margin:0 auto 28px;line-height:1.4}
+.studio-quote cite{font-size:0.78rem;color:var(--warm);letter-spacing:0.12em;text-transform:uppercase}
+
+.cta-section{padding:80px 48px;text-align:center}
+.cta-section h2{font-family:'DM Serif Display',serif;font-size:2.6rem;color:var(--dark);margin-bottom:12px}
+.cta-section p{color:var(--muted);margin-bottom:40px;font-weight:300}
+.contact-form{max-width:560px;margin:0 auto;text-align:left}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-group{display:flex;flex-direction:column;margin-bottom:16px}
+.form-group label{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.form-control{background:none;border:none;border-bottom:1px solid rgba(44,36,32,0.25);padding:10px 0;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--dark);outline:none;transition:border-color 0.3s}
+.form-control:focus{border-bottom-color:var(--accent)}
+textarea.form-control{resize:none;height:100px}
+
+footer{background:var(--dark);color:rgba(245,240,235,0.5);padding:48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--bg)}
+.footer-links{display:flex;gap:24px;list-style:none;font-size:0.78rem}
+.footer-links a{transition:color 0.2s}.footer-links a:hover{color:var(--bg)}
+.footer-copy{font-size:0.72rem;opacity:0.4}
+
+@media(max-width:768px){
+  nav{padding:0 20px}.nav-links{display:none}
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-img{height:50vw;min-height:280px}
+  .hero-right{padding:40px 20px}
+  .section{padding:64px 20px}
+  .projects-grid{grid-template-columns:1fr}
+  .services-row{grid-template-columns:1fr}
+  .service-item{border-right:none}
+  .process-step{grid-template-columns:1fr}
+  footer{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<a href="../demos.html" class="back-link">← Back to Gallery</a>
+
+<nav>
+  <div class="nav-logo">Atelier</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Studio</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-img-wrap">
+    <img class="hero-img" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=80" alt="Interior Design">
+  </div>
+  <div class="hero-right">
+    <p class="hero-studio">Interior Design Studio</p>
+    <p class="hero-est">Est. 2018 &nbsp;&middot;&nbsp; New York</p>
+    <h1>Spaces That<br>Tell Your Story</h1>
+    <p class="hero-sub">We design residential and commercial spaces that reflect who you are — considered, layered, and built to last.</p>
+    <a href="#projects" class="btn-dark">View Our Work →</a>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="container">
+    <p class="section-label">Selected Work</p>
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card large">
+        <img class="project-img" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80" alt="The Hudson Residence">
+        <div class="project-overlay"></div>
+        <div class="project-info"><div class="project-name">The Hudson Residence</div><div class="project-type">Residential &middot; 2025</div></div>
+      </div>
+      <div class="project-card large">
+        <img class="project-img" src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80" alt="Tribeca Loft">
+        <div class="project-overlay"></div>
+        <div class="project-info"><div class="project-name">Tribeca Loft</div><div class="project-type">Residential &middot; 2025</div></div>
+      </div>
+      <div class="project-card">
+        <img class="project-img" style="height:280px" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80" alt="Café Lumière">
+        <div class="project-overlay"></div>
+        <div class="project-info"><div class="project-name">Café Lumière</div><div class="project-type">Commercial &middot; 2024</div></div>
+      </div>
+      <div class="project-card">
+        <img class="project-img" style="height:280px" src="https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=600&q=80" alt="The Riverside Suite">
+        <div class="project-overlay"></div>
+        <div class="project-info"><div class="project-name">The Riverside Suite</div><div class="project-type">Hospitality &middot; 2024</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section services" id="services">
+  <div class="container">
+    <p class="section-label">Expertise</p>
+    <h2 class="section-title">What We Do</h2>
+    <div class="services-row">
+      <div class="service-item">
+        <h3>Residential Design</h3>
+        <p>Full-service interiors for homes, apartments, and estates. From concept through installation.</p>
+      </div>
+      <div class="service-item">
+        <h3>Commercial Spaces</h3>
+        <p>Offices, retail, and hospitality environments designed to perform and inspire.</p>
+      </div>
+      <div class="service-item">
+        <h3>Furniture Curation</h3>
+        <p>Custom furniture sourcing and specification. Access to trade-only collections worldwide.</p>
+      </div>
+      <div class="service-item">
+        <h3>Renovation Consulting</h3>
+        <p>Architectural coordination, contractor management, and project oversight end to end.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process-section" id="process">
+  <div class="container">
+    <p class="section-label" style="text-align:center">How We Work</p>
+    <h2 class="section-title" style="text-align:center">Our Process</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-text">
+          <div class="step-num">01</div>
+          <h3>Discovery</h3>
+          <p>We begin by listening. A detailed conversation about how you live, what you love, and what you want to feel when you walk through the door.</p>
+        </div>
+        <div class="step-img"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" alt="Discovery meeting"></div>
+      </div>
+      <div class="process-step">
+        <div class="step-text">
+          <div class="step-num">02</div>
+          <h3>Design</h3>
+          <p>Concept boards, spatial plans, material palettes, and custom furniture specifications. We present a fully-formed vision before anything is purchased.</p>
+        </div>
+        <div class="step-img"><img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&q=80" alt="Design process"></div>
+      </div>
+      <div class="process-step">
+        <div class="step-text">
+          <div class="step-num">03</div>
+          <h3>Delivery</h3>
+          <p>We coordinate every detail — from contractor scheduling to white-glove installation. You walk into a finished space, not a project site.</p>
+        </div>
+        <div class="step-img"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=80" alt="Final delivery"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="studio-quote">
+  <blockquote>"Good design doesn't shout. It settles in, grows on you, and makes you feel at home every single day."</blockquote>
+  <cite>— Clara Morin, Founder &amp; Principal Designer</cite>
+</div>
+
+<section class="cta-section" id="contact">
+  <p class="section-label">Start a Project</p>
+  <h2>Let's design together.</h2>
+  <p>Tell us about your project and we'll be in touch within two business days.</p>
+  <form class="contact-form">
+    <div class="form-row">
+      <div class="form-group"><label>First Name</label><input class="form-control" type="text" placeholder="Clara"></div>
+      <div class="form-group"><label>Last Name</label><input class="form-control" type="text" placeholder="Morin"></div>
+    </div>
+    <div class="form-group"><label>Email</label><input class="form-control" type="email" placeholder="hello@example.com"></div>
+    <div class="form-group"><label>Tell us about your project</label><textarea class="form-control" placeholder="I'm redesigning my apartment in Tribeca..."></textarea></div>
+    <button type="submit" class="btn-dark" style="width:100%;justify-content:center;text-align:center;cursor:pointer;border:none;font-family:inherit;font-size:0.85rem">Send Message</button>
+  </form>
+</section>
+
+<footer>
+  <div class="footer-logo">Atelier</div>
+  <ul class="footer-links">
+    <li><a href="#">Projects</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Press</a></li>
+    <li><a href="#">Instagram</a></li>
+  </ul>
+  <div class="footer-copy">&copy; 2026 Atelier Studio</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.service-item,.process-step').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

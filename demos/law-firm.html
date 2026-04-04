@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chen & Associates — Trusted Legal Counsel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --dark: #1B2B4B;
+    --gold: #C9A96E;
+    --gold-light: #E8D5B0;
+    --light: #F0EDE8;
+    --text: #2C3E50;
+    --muted: #6B7280;
+    --border: #E0DBD2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Libre Baskerville', Georgia, serif; }
+
+  /* BACK LINK */
+  .back-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background: var(--dark);
+    color: var(--gold-light);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'Source Sans Pro', sans-serif;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(201,169,110,0.3);
+  }
+  .back-link:hover { background: #243a63; color: var(--gold); }
+  .back-link svg { width: 14px; height: 14px; }
+
+  /* TOP BAR */
+  .top-bar {
+    background: var(--dark);
+    padding: 9px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .top-bar-phone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+  .top-bar-phone svg { width: 14px; height: 14px; color: var(--gold); }
+
+  .top-bar-cta {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201,169,110,0.4);
+    transition: border-color 0.3s;
+  }
+
+  .top-bar-cta:hover { border-color: var(--gold); }
+
+  /* NAV */
+  nav {
+    background: white;
+    padding: 22px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--light);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(27,43,75,0.06);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+
+  .nav-monogram {
+    width: 46px; height: 46px;
+    background: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 18px;
+    letter-spacing: -1px;
+    flex-shrink: 0;
+  }
+
+  .nav-wordmark {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 18px;
+    color: var(--dark);
+    letter-spacing: 0.5px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+    position: relative;
+    padding-bottom: 4px;
+    transition: color 0.3s;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-links a:hover { color: var(--dark); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 620px;
+  }
+
+  .hero-left {
+    background: var(--bg);
+    padding: 80px 64px 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-family: 'Source Sans Pro', sans-serif;
+    margin-bottom: 24px;
+    animation: heroFadeIn 0.9s 0.1s ease both;
+  }
+
+  .hero-label::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .hero-left h1 {
+    font-size: clamp(30px, 3.2vw, 52px);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 20px;
+    animation: heroFadeIn 0.9s 0.2s ease both;
+  }
+
+  .gold-rule {
+    width: 60px;
+    height: 3px;
+    background: var(--gold);
+    margin: 20px 0 24px;
+    animation: heroFadeIn 0.9s 0.3s ease both;
+  }
+
+  .hero-left p {
+    color: var(--muted);
+    font-size: 17px;
+    max-width: 380px;
+    margin-bottom: 36px;
+    animation: heroFadeIn 0.9s 0.35s ease both;
+    line-height: 1.8;
+  }
+
+  .btn-dark {
+    display: inline-block;
+    background: var(--dark);
+    color: white;
+    text-decoration: none;
+    padding: 15px 36px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Source Sans Pro', sans-serif;
+    transition: all 0.35s ease;
+    border: 2px solid var(--dark);
+    align-self: flex-start;
+    animation: heroFadeIn 0.9s 0.45s ease both;
+  }
+
+  .btn-dark:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--dark);
+  }
+
+  @keyframes heroFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-right::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 80px;
+    background: linear-gradient(90deg, var(--bg) 0%, transparent 100%);
+  }
+
+  /* PRACTICE AREAS */
+  .practice-section {
+    padding: 100px 60px;
+    background: white;
+  }
+
+  .practice-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .practice-title-block .section-eyebrow {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: 'Source Sans Pro', sans-serif;
+    margin-bottom: 16px;
+  }
+
+  .practice-title-block h2 {
+    font-size: clamp(26px, 2.8vw, 42px);
+    color: var(--dark);
+    line-height: 1.25;
+    margin-bottom: 20px;
+  }
+
+  .practice-title-block p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .practice-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .practice-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 600;
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    cursor: default;
+  }
+
+  .practice-item:nth-child(odd) { padding-right: 24px; }
+
+  .practice-item.is-visible { opacity: 1; transform: translateX(0); }
+  .practice-item:nth-child(1) { transition-delay: 0s; }
+  .practice-item:nth-child(2) { transition-delay: 0.07s; }
+  .practice-item:nth-child(3) { transition-delay: 0.14s; }
+  .practice-item:nth-child(4) { transition-delay: 0.21s; }
+  .practice-item:nth-child(5) { transition-delay: 0.28s; }
+  .practice-item:nth-child(6) { transition-delay: 0.35s; }
+
+  .practice-item:hover { color: var(--dark); }
+
+  .practice-arrow {
+    width: 18px; height: 18px;
+    flex-shrink: 0;
+    color: var(--gold);
+  }
+
+  /* STATS */
+  .stats-section {
+    background: var(--dark);
+    padding: 70px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    text-align: center;
+  }
+
+  .stat-item {}
+
+  .stat-value {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    color: var(--gold);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .stat-label {
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+  /* TEAM */
+  .team-section {
+    padding: 100px 60px;
+    background: var(--bg);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .section-eyebrow {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: 'Source Sans Pro', sans-serif;
+    margin-bottom: 14px;
+  }
+
+  .section-header h2 {
+    font-size: clamp(26px, 3vw, 42px);
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+
+  .section-header p {
+    color: var(--muted);
+    font-size: 17px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 36px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .team-card {
+    background: white;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease;
+  }
+
+  .team-card.is-visible { opacity: 1; transform: translateY(0); }
+  .team-card:nth-child(1) { transition-delay: 0s; }
+  .team-card:nth-child(2) { transition-delay: 0.15s; }
+  .team-card:nth-child(3) { transition-delay: 0.3s; }
+
+  .team-card:hover { box-shadow: 0 20px 60px rgba(27,43,75,0.12); }
+
+  .team-photo {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    filter: grayscale(20%);
+    transition: filter 0.4s;
+  }
+
+  .team-card:hover .team-photo { filter: grayscale(0%); }
+
+  .team-info { padding: 24px; }
+
+  .team-specialty {
+    width: 100%;
+    height: 3px;
+    background: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .team-name {
+    font-size: 20px;
+    color: var(--dark);
+    margin-bottom: 4px;
+  }
+
+  .team-title {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14px;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .team-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-section {
+    background: white;
+    padding: 100px 60px;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1000px;
+    margin: 64px auto 0;
+  }
+
+  .testimonial-card {
+    background: var(--light);
+    padding: 44px;
+    border-left: 4px solid var(--gold);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .testimonial-card.is-visible { opacity: 1; transform: translateY(0); }
+  .testimonial-card:nth-child(1) { transition-delay: 0s; }
+  .testimonial-card:nth-child(2) { transition-delay: 0.2s; }
+
+  .quote-mark {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 72px;
+    color: var(--gold);
+    line-height: 0.5;
+    margin-bottom: 24px;
+    display: block;
+    opacity: 0.6;
+  }
+
+  .testimonial-text {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--dark);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .testimonial-author {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--dark);
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+  .testimonial-case {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Source Sans Pro', sans-serif;
+    margin-top: 4px;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--dark);
+    padding: 90px 60px;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-size: clamp(28px, 3.5vw, 46px);
+    color: white;
+    margin-bottom: 16px;
+  }
+
+  .cta-section p {
+    color: rgba(255,255,255,0.55);
+    font-size: 17px;
+    margin-bottom: 40px;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .btn-gold {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--dark);
+    text-decoration: none;
+    padding: 16px 40px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Source Sans Pro', sans-serif;
+    transition: all 0.35s ease;
+    border: 2px solid var(--gold);
+  }
+
+  .btn-gold:hover { background: transparent; color: var(--gold); }
+
+  .cta-phone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,0.6);
+    font-size: 18px;
+    text-decoration: none;
+    font-family: 'Libre Baskerville', serif;
+    transition: color 0.3s;
+  }
+
+  .cta-phone:hover { color: var(--gold); }
+  .cta-phone svg { color: var(--gold); width: 20px; height: 20px; }
+
+  /* FOOTER */
+  footer {
+    background: #121e35;
+    color: rgba(255,255,255,0.5);
+    padding: 60px 60px 40px;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 36px;
+  }
+
+  .footer-brand p {
+    font-size: 14px;
+    line-height: 1.8;
+    margin-top: 16px;
+    max-width: 280px;
+  }
+
+  .footer-brand .monogram {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 28px;
+    letter-spacing: -1px;
+  }
+
+  .footer-col h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col ul li { margin-bottom: 10px; }
+
+  .footer-col ul li a {
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+  }
+
+  .footer-col ul li a:hover { color: rgba(255,255,255,0.8); }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+  }
+
+  .bar-membership {
+    color: rgba(255,255,255,0.3);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Fade-up utility */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .fade-up.is-visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .top-bar { padding: 9px 20px; display: none; }
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { height: 300px; }
+    .hero-right::after { display: none; }
+    .hero-left { padding: 60px 24px; }
+
+    .practice-section { padding: 70px 24px; }
+    .practice-inner { grid-template-columns: 1fr; gap: 40px; }
+    .practice-list { grid-template-columns: 1fr; }
+
+    .stats-section { padding: 50px 24px; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+
+    .team-section { padding: 70px 24px; }
+    .team-grid { grid-template-columns: 1fr; }
+
+    .testimonials-section { padding: 70px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+
+    .cta-section { padding: 70px 24px; }
+    .footer-top { grid-template-columns: 1fr 1fr; padding: 40px 0; }
+    footer { padding: 40px 24px 30px; }
+
+    .back-link { top: 12px; left: 12px; display: none; }
+  }
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back-link">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+  Back to Gallery
+</a>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="top-bar-phone">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.38a16 16 0 006.71 6.71l1.71-1.71a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    +1 (212) 555-0189
+  </div>
+  <a href="#contact" class="top-bar-cta">Free Consultation Available</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-monogram">C&A</div>
+    <span class="nav-wordmark">Chen &amp; Associates</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#practice">Practice Areas</a></li>
+    <li><a href="#team">Our Team</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-label">Established 1998 · New York</div>
+    <h1>Trusted Legal Counsel<br>Since 1998</h1>
+    <div class="gold-rule"></div>
+    <p>Protecting your rights, securing your future. Our attorneys bring decades of courtroom experience to every case we take.</p>
+    <a href="#contact" class="btn-dark">Schedule Consultation</a>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1400&q=80" alt="Legal counsel office" loading="eager">
+  </div>
+</section>
+
+<!-- PRACTICE AREAS -->
+<section class="practice-section" id="practice">
+  <div class="practice-inner">
+    <div class="practice-title-block fade-up">
+      <span class="section-eyebrow">Expertise</span>
+      <h2>Our Practice Areas</h2>
+      <p>From complex corporate transactions to high-stakes litigation, our attorneys bring specialized knowledge across the full spectrum of legal disciplines.</p>
+    </div>
+    <ul class="practice-list">
+      <li class="practice-item">
+        <svg class="practice-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        Corporate Law
+      </li>
+      <li class="practice-item">
+        <svg class="practice-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        Mergers &amp; Acquisitions
+      </li>
+      <li class="practice-item">
+        <svg class="practice-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        Employment Law
+      </li>
+      <li class="practice-item">
+        <svg class="practice-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        Real Estate
+      </li>
+      <li class="practice-item">
+        <svg class="practice-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        Civil Litigation
+      </li>
+      <li class="practice-item">
+        <svg class="practice-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        Estate Planning
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-section" id="results">
+  <div class="stat-item fade-up">
+    <span class="stat-value" data-target="25" data-suffix="+">0+</span>
+    <span class="stat-label">Years of Practice</span>
+  </div>
+  <div class="stat-item fade-up" style="transition-delay:0.1s">
+    <span class="stat-value" data-target="500" data-suffix="M+" data-prefix="$">$0M+</span>
+    <span class="stat-label">Recovered for Clients</span>
+  </div>
+  <div class="stat-item fade-up" style="transition-delay:0.2s">
+    <span class="stat-value" data-target="2000" data-suffix="+">0+</span>
+    <span class="stat-label">Cases Resolved</span>
+  </div>
+  <div class="stat-item fade-up" style="transition-delay:0.3s">
+    <span class="stat-value" data-target="98" data-suffix="%">0%</span>
+    <span class="stat-label">Client Satisfaction</span>
+  </div>
+</div>
+
+<!-- TEAM -->
+<section class="team-section" id="team">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">The Firm</span>
+    <h2>Our Attorneys</h2>
+    <p>A team of distinguished legal professionals committed to achieving the best possible outcomes for our clients.</p>
+  </div>
+  <div class="team-grid">
+
+    <div class="team-card">
+      <img class="team-photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="James Chen">
+      <div class="team-info">
+        <div class="team-specialty"></div>
+        <div class="team-title">Founding Partner</div>
+        <h3 class="team-name">James Chen</h3>
+        <p class="team-desc">Harvard Law, J.D. 1995. Over 30 years handling complex corporate transactions and high-stakes M&amp;A deals for Fortune 500 companies.</p>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <img class="team-photo" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Sarah Reyes">
+      <div class="team-info">
+        <div class="team-specialty"></div>
+        <div class="team-title">Senior Partner</div>
+        <h3 class="team-name">Sarah Reyes</h3>
+        <p class="team-desc">Columbia Law, J.D. 1999. Specializes in employment discrimination, wrongful termination, and executive compensation disputes.</p>
+      </div>
+    </div>
+
+    <div class="team-card">
+      <img class="team-photo" src="https://images.unsplash.com/photo-1556157382-97eda2f9e2bf?w=400&q=80" alt="Michael Torres">
+      <div class="team-info">
+        <div class="team-specialty"></div>
+        <div class="team-title">Partner, Litigation</div>
+        <h3 class="team-name">Michael Torres</h3>
+        <p class="team-desc">NYU Law, J.D. 2003. Trial attorney with an exceptional record in commercial litigation, real estate disputes, and estate contestation.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Client Voices</span>
+    <h2>What Our Clients Say</h2>
+  </div>
+  <div class="testimonials-grid">
+
+    <div class="testimonial-card">
+      <span class="quote-mark">"</span>
+      <p class="testimonial-text">Chen & Associates fought relentlessly for our company during a hostile acquisition attempt. James Chen's strategic counsel was nothing short of extraordinary. We retained full independence and came out stronger.</p>
+      <div class="testimonial-author">Robert Harrington</div>
+      <div class="testimonial-case">Corporate Defense · M&amp;A Litigation</div>
+    </div>
+
+    <div class="testimonial-card">
+      <span class="quote-mark">"</span>
+      <p class="testimonial-text">After a wrongful termination that devastated my career, Sarah Reyes took my case when no one else would. The outcome exceeded everything I hoped for. I finally had someone in my corner who truly listened.</p>
+      <div class="testimonial-author">Diana Fowler</div>
+      <div class="testimonial-case">Employment Law · Wrongful Termination</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="fade-up">
+    <h2>Your first consultation is free.</h2>
+    <p>Speak with an attorney today. No obligation, no cost.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-gold">Schedule Now</a>
+      <a href="tel:+12125550189" class="cta-phone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.38a16 16 0 006.71 6.71l1.71-1.71a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +1 (212) 555-0189
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="monogram">C&A</div>
+      <p>Chen & Associates has served clients throughout New York and nationally since 1998. We are committed to delivering exceptional legal counsel with the highest standards of integrity.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Practice</h4>
+      <ul>
+        <li><a href="#">Corporate Law</a></li>
+        <li><a href="#">M&A</a></li>
+        <li><a href="#">Employment</a></li>
+        <li><a href="#">Real Estate</a></li>
+        <li><a href="#">Litigation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Firm</h4>
+      <ul>
+        <li><a href="#">Our Team</a></li>
+        <li><a href="#">Results</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">News</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Schedule Consultation</a></li>
+        <li><a href="#">Directions</a></li>
+        <li><a href="#">Client Portal</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Chen & Associates PLLC. All rights reserved. · 425 Lexington Avenue, New York, NY 10017</p>
+    <div class="bar-membership">Member: New York State Bar Association · American Bar Association</div>
+  </div>
+</footer>
+
+<script>
+  // IntersectionObserver for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.fade-up, .team-card, .testimonial-card, .practice-item').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Count-up animation for stats
+  function countUp(el, target, prefix = '', suffix = '', duration = 1800) {
+    const start = performance.now();
+    const update = (time) => {
+      const elapsed = time - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = Math.floor(eased * target);
+      el.textContent = prefix + value.toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  }
+
+  const statObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseFloat(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        const prefix = el.dataset.prefix || '';
+        countUp(el, target, prefix, suffix);
+        statObs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.stat-value[data-target]').forEach(el => statObs.observe(el));
+</script>
+
+</body>
+</html>

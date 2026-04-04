@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Éclat Bakery — Artisan Pastries & Breads</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400;700&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:#FDF8F0;
+  --warm-white:#FEFCF8;
+  --brown:#5C3D2E;
+  --brown-light:#8B6355;
+  --gold:#D4A853;
+  --gold-light:#E8C97A;
+  --text:#2C1810;
+  --text-light:#7A5C50;
+  --border:#E8DDD0;
+  --radius:12px;
+}
+
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Lato',sans-serif;background:var(--warm-white);color:var(--text);overflow-x:hidden}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(253,248,240,0.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  height:72px;display:flex;align-items:center;
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;padding:0 32px;
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;font-size:22px;color:var(--brown);
+  letter-spacing:0.02em;text-decoration:none;
+}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-family:'Lato',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--brown-light);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--brown);color:var(--cream);padding:10px 24px;border-radius:50px;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .2s}
+.nav-cta:hover{background:var(--gold);transform:translateY(-1px)}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  background:var(--cream);position:relative;overflow:hidden;
+  padding-top:72px;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 70% 50%, rgba(212,168,83,0.12) 0%, transparent 70%),
+             radial-gradient(ellipse 40% 40% at 20% 80%, rgba(92,61,46,0.06) 0%, transparent 60%);
+}
+.hero-inner{
+  max-width:1200px;margin:0 auto;padding:80px 32px;
+  width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+  position:relative;z-index:1;
+}
+.hero-eyebrow{
+  font-family:'Crimson Pro',serif;font-size:16px;font-style:italic;
+  color:var(--gold);letter-spacing:0.1em;margin-bottom:20px;
+}
+.hero-title{
+  font-family:'Playfair Display',serif;font-size:clamp(48px,5vw,72px);
+  font-weight:700;line-height:1.05;color:var(--brown);margin-bottom:24px;
+}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-desc{
+  font-family:'Crimson Pro',serif;font-size:20px;line-height:1.7;
+  color:var(--brown-light);margin-bottom:40px;font-weight:300;
+}
+.hero-btns{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.btn-primary{
+  background:var(--brown);color:var(--cream);padding:16px 36px;border-radius:50px;
+  font-family:'Lato',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;text-decoration:none;
+  transition:all .3s;display:inline-block;
+}
+.btn-primary:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,168,83,0.35)}
+.btn-text{
+  font-family:'Crimson Pro',serif;font-size:18px;font-style:italic;
+  color:var(--brown-light);text-decoration:none;border-bottom:1px solid var(--gold-light);
+  padding-bottom:2px;transition:color .2s;
+}
+.btn-text:hover{color:var(--gold)}
+
+/* HERO IMAGE */
+.hero-visual{position:relative;height:540px}
+.hero-img-main{
+  width:100%;height:420px;object-fit:cover;
+  border-radius:24px 24px 80px 24px;
+  box-shadow:0 24px 60px rgba(92,61,46,0.2);
+}
+.hero-badge{
+  position:absolute;bottom:-20px;left:-24px;
+  background:var(--brown);color:var(--cream);
+  padding:20px 28px;border-radius:20px;
+  box-shadow:0 12px 32px rgba(92,61,46,0.25);
+}
+.hero-badge-num{
+  font-family:'Playfair Display',serif;font-size:36px;font-weight:700;
+  color:var(--gold);line-height:1;
+}
+.hero-badge-txt{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;opacity:.8}
+.hero-float{
+  position:absolute;top:-16px;right:-16px;
+  background:var(--warm-white);border:2px solid var(--border);
+  padding:16px 20px;border-radius:16px;
+  box-shadow:0 8px 24px rgba(92,61,46,0.1);
+  text-align:center;
+}
+.hero-float-icon{font-size:28px;margin-bottom:4px}
+.hero-float-txt{font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--brown);white-space:nowrap}
+
+/* STEAM ANIMATION */
+@keyframes steam {
+  0%{opacity:0;transform:translateY(0) scaleX(1)}
+  15%{opacity:.6}
+  50%{opacity:.4;transform:translateY(-40px) scaleX(1.2)}
+  100%{opacity:0;transform:translateY(-80px) scaleX(0.8)}
+}
+.steam-container{position:absolute;top:20px;left:50%;transform:translateX(-50%)}
+.steam{
+  position:absolute;bottom:0;
+  width:8px;height:60px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.7);
+  filter:blur(4px);
+  animation:steam 2.5s ease-in infinite;
+}
+.steam:nth-child(1){left:-16px;animation-delay:0s}
+.steam:nth-child(2){left:0px;animation-delay:.6s;height:80px}
+.steam:nth-child(3){left:16px;animation-delay:1.2s}
+
+/* SECTION HEADERS */
+.section-label{
+  font-family:'Lato',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:12px;
+}
+.section-title{
+  font-family:'Playfair Display',serif;font-size:clamp(32px,3.5vw,48px);
+  font-weight:700;color:var(--brown);line-height:1.15;
+}
+.section-title em{font-style:italic}
+.section-subtitle{
+  font-family:'Crimson Pro',serif;font-size:18px;line-height:1.7;
+  color:var(--brown-light);font-weight:300;margin-top:16px;
+}
+
+/* MENU SECTION */
+.menu-section{padding:100px 0;background:var(--warm-white)}
+.menu-inner{max-width:1200px;margin:0 auto;padding:0 32px}
+.menu-header{text-align:center;margin-bottom:64px}
+.menu-tabs{
+  display:flex;justify-content:center;gap:4px;
+  background:var(--cream);border-radius:50px;
+  padding:6px;width:fit-content;margin:0 auto 56px;
+  border:1px solid var(--border);
+}
+.menu-tab{
+  padding:10px 28px;border-radius:50px;border:none;cursor:pointer;
+  font-family:'Lato',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:0.06em;text-transform:uppercase;
+  background:transparent;color:var(--brown-light);
+  transition:all .2s;
+}
+.menu-tab.active{background:var(--brown);color:var(--cream)}
+.menu-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:32px;
+}
+.menu-card{
+  background:var(--cream);border-radius:20px;overflow:hidden;
+  border:1px solid var(--border);
+  transition:transform .3s,box-shadow .3s;
+  cursor:pointer;
+}
+.menu-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(92,61,46,0.12)}
+.menu-card-img{
+  width:100%;height:220px;object-fit:cover;
+  transition:transform .5s;
+}
+.menu-card:hover .menu-card-img{transform:scale(1.04)}
+.menu-card-body{padding:24px}
+.menu-card-name{
+  font-family:'Playfair Display',serif;font-size:22px;font-weight:600;
+  color:var(--brown);margin-bottom:8px;
+}
+.menu-card-desc{
+  font-family:'Crimson Pro',serif;font-size:16px;font-style:italic;
+  color:var(--brown-light);line-height:1.5;margin-bottom:16px;
+}
+.menu-card-footer{display:flex;justify-content:space-between;align-items:center}
+.menu-card-price{
+  font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold)
+}
+.menu-card-badge{
+  background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.3);
+  color:var(--gold);padding:5px 14px;border-radius:50px;
+  font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+}
+
+/* STORY SECTION */
+.story-section{padding:100px 0;background:var(--brown);overflow:hidden}
+.story-inner{
+  max-width:1200px;margin:0 auto;padding:0 32px;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+}
+.story-images{position:relative;height:500px}
+.story-img1{
+  position:absolute;top:0;left:0;width:72%;height:380px;
+  object-fit:cover;border-radius:20px;
+  box-shadow:0 20px 48px rgba(0,0,0,0.3);
+}
+.story-img2{
+  position:absolute;bottom:0;right:0;width:55%;height:280px;
+  object-fit:cover;border-radius:20px;
+  border:4px solid var(--gold);
+  box-shadow:0 16px 40px rgba(0,0,0,0.3);
+}
+.story-content .section-label{color:var(--gold-light)}
+.story-title{
+  font-family:'Playfair Display',serif;font-size:clamp(32px,3vw,44px);
+  font-weight:700;color:var(--cream);line-height:1.15;margin-bottom:24px;
+}
+.story-title em{font-style:italic;color:var(--gold)}
+.story-text{
+  font-family:'Crimson Pro',serif;font-size:18px;line-height:1.8;
+  color:rgba(253,248,240,0.7);font-weight:300;margin-bottom:16px;
+}
+.story-sig{
+  font-family:'Playfair Display',serif;font-size:26px;font-style:italic;
+  color:var(--gold-light);margin-top:32px;
+}
+.story-sig-sub{font-family:'Lato',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(253,248,240,0.5);margin-top:4px}
+
+/* PROCESS SECTION */
+.process-section{padding:100px 0;background:var(--cream)}
+.process-inner{max-width:1100px;margin:0 auto;padding:0 32px}
+.process-header{text-align:center;margin-bottom:64px}
+.process-steps{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;
+}
+.process-steps::before{
+  content:'';position:absolute;top:40px;left:calc(12.5% + 20px);
+  width:calc(75% - 40px);height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--brown));
+  z-index:0;
+}
+.process-step{text-align:center;padding:0 16px;position:relative;z-index:1}
+.step-num{
+  width:80px;height:80px;border-radius:50%;
+  background:var(--brown);color:var(--cream);
+  font-family:'Playfair Display',serif;font-size:28px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 24px;
+  border:3px solid var(--cream);
+  box-shadow:0 4px 16px rgba(92,61,46,0.2);
+  transition:all .3s;
+}
+.process-step:hover .step-num{background:var(--gold);transform:scale(1.1)}
+.step-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--brown);margin-bottom:8px}
+.step-desc{font-family:'Crimson Pro',serif;font-size:15px;font-style:italic;color:var(--brown-light);line-height:1.5}
+
+/* SPECIALS SECTION */
+.specials-section{padding:100px 0;background:var(--warm-white)}
+.specials-inner{max-width:1200px;margin:0 auto;padding:0 32px}
+.specials-header{text-align:center;margin-bottom:64px}
+.specials-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:32px}
+.special-featured{
+  background:var(--brown);border-radius:24px;overflow:hidden;
+  display:grid;grid-template-rows:1fr auto;position:relative;
+}
+.special-featured-img{width:100%;height:320px;object-fit:cover;opacity:.85}
+.special-featured-body{padding:32px}
+.special-tag{
+  display:inline-block;background:var(--gold);color:var(--brown);
+  padding:6px 16px;border-radius:50px;
+  font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:16px;
+}
+.special-title{
+  font-family:'Playfair Display',serif;font-size:26px;font-weight:700;
+  color:var(--cream);margin-bottom:12px;
+}
+.special-desc{
+  font-family:'Crimson Pro',serif;font-size:16px;font-style:italic;
+  color:rgba(253,248,240,0.7);line-height:1.6;margin-bottom:20px;
+}
+.special-price{
+  font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--gold-light)
+}
+.specials-list{display:flex;flex-direction:column;gap:20px}
+.special-item{
+  background:var(--cream);border-radius:16px;padding:24px;
+  border:1px solid var(--border);
+  display:grid;grid-template-columns:80px 1fr;gap:20px;align-items:center;
+  transition:all .3s;cursor:pointer;
+}
+.special-item:hover{border-color:var(--gold);box-shadow:0 8px 24px rgba(92,61,46,0.08);transform:translateX(4px)}
+.special-item-img{
+  width:80px;height:80px;object-fit:cover;border-radius:12px;
+}
+.special-item-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--brown);margin-bottom:4px}
+.special-item-desc{font-family:'Crimson Pro',serif;font-size:14px;font-style:italic;color:var(--brown-light)}
+.special-item-price{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--gold);margin-top:8px}
+
+/* HOURS SECTION */
+.hours-section{
+  padding:80px 0;
+  background:linear-gradient(135deg,var(--cream) 0%,rgba(212,168,83,0.08) 100%);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.hours-inner{
+  max-width:1000px;margin:0 auto;padding:0 32px;
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:48px;text-align:center;
+}
+.hours-block h3{
+  font-family:'Playfair Display',serif;font-size:20px;font-weight:600;
+  color:var(--brown);margin-bottom:16px;
+}
+.hours-block h3 svg{vertical-align:middle;margin-right:8px;color:var(--gold)}
+.hours-row{
+  display:flex;justify-content:space-between;
+  padding:8px 0;border-bottom:1px solid var(--border);
+  font-family:'Lato',sans-serif;font-size:14px;
+}
+.hours-row:last-child{border-bottom:none}
+.hours-day{color:var(--brown-light)}
+.hours-time{font-weight:700;color:var(--brown)}
+.hours-time.closed{color:var(--gold)}
+
+/* TESTIMONIALS */
+.testimonials-section{padding:100px 0;background:var(--warm-white)}
+.testimonials-inner{max-width:1100px;margin:0 auto;padding:0 32px}
+.testimonials-header{text-align:center;margin-bottom:56px}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.testimonial-card{
+  background:var(--cream);border-radius:20px;padding:32px;
+  border:1px solid var(--border);position:relative;
+}
+.testimonial-card::before{
+  content:'\201C';font-family:'Playfair Display',serif;font-size:80px;
+  color:rgba(212,168,83,0.2);position:absolute;top:16px;left:24px;line-height:1;
+}
+.testimonial-text{
+  font-family:'Crimson Pro',serif;font-size:17px;font-style:italic;
+  color:var(--brown);line-height:1.7;margin-bottom:24px;position:relative;z-index:1;
+}
+.testimonial-author{display:flex;align-items:center;gap:14px}
+.testimonial-avatar{
+  width:48px;height:48px;border-radius:50%;object-fit:cover;
+  border:2px solid var(--gold-light);
+}
+.testimonial-name{font-family:'Lato',sans-serif;font-weight:700;font-size:14px;color:var(--brown)}
+.testimonial-role{font-family:'Lato',sans-serif;font-size:12px;color:var(--brown-light)}
+.testimonial-stars{display:flex;gap:2px;margin-bottom:12px}
+.star{color:var(--gold)}
+
+/* ORDER SECTION */
+.order-section{padding:100px 0;background:var(--brown)}
+.order-inner{
+  max-width:900px;margin:0 auto;padding:0 32px;
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;
+}
+.order-info .section-label{color:var(--gold-light)}
+.order-title{
+  font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,40px);
+  font-weight:700;color:var(--cream);line-height:1.2;margin-bottom:20px;
+}
+.order-title em{font-style:italic;color:var(--gold)}
+.order-desc{
+  font-family:'Crimson Pro',serif;font-size:17px;font-style:italic;
+  color:rgba(253,248,240,0.7);line-height:1.7;margin-bottom:32px;
+}
+.order-note{
+  display:flex;align-items:flex-start;gap:12px;padding:16px;
+  background:rgba(212,168,83,0.1);border:1px solid rgba(212,168,83,0.2);
+  border-radius:12px;
+}
+.order-note-icon svg{color:var(--gold);flex-shrink:0;margin-top:2px}
+.order-note-text{font-family:'Lato',sans-serif;font-size:13px;color:rgba(253,248,240,0.6);line-height:1.5}
+.order-form{background:rgba(255,255,255,0.05);border:1px solid rgba(212,168,83,0.2);border-radius:20px;padding:32px}
+.form-group{margin-bottom:20px}
+.form-label{font-family:'Lato',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(253,248,240,0.6);margin-bottom:8px;display:block}
+.form-input,
+.form-select,
+.form-textarea{
+  width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(212,168,83,0.2);
+  color:var(--cream);border-radius:10px;padding:12px 16px;
+  font-family:'Lato',sans-serif;font-size:14px;outline:none;
+  transition:border-color .2s;
+}
+.form-input::placeholder,.form-textarea::placeholder{color:rgba(253,248,240,0.3)}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--gold)}
+.form-select{cursor:pointer}
+.form-select option{background:var(--brown);color:var(--cream)}
+.form-textarea{resize:vertical;min-height:100px}
+.form-submit{
+  width:100%;padding:16px;border-radius:50px;border:none;cursor:pointer;
+  background:var(--gold);color:var(--brown);
+  font-family:'Lato',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  transition:all .2s;margin-top:4px;
+}
+.form-submit:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,168,83,0.3)}
+
+/* FOOTER */
+footer{background:var(--text);padding:40px 0;text-align:center}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 32px}
+.footer-logo{font-family:'Playfair Display',serif;font-size:22px;color:var(--cream);margin-bottom:12px}
+.footer-logo span{color:var(--gold)}
+.footer-tagline{font-family:'Crimson Pro',serif;font-size:16px;font-style:italic;color:rgba(253,248,240,0.4);margin-bottom:20px}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:20px}
+.footer-links a{font-family:'Lato',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(253,248,240,0.4);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--gold)}
+.footer-copy{font-family:'Lato',sans-serif;font-size:12px;color:rgba(253,248,240,0.25)}
+
+/* REVEAL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in-view{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .7s ease,transform .7s ease}
+.reveal-left.in-view{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .7s ease,transform .7s ease}
+.reveal-right.in-view{opacity:1;transform:none}
+.reveal-scale{opacity:0;transform:scale(0.92);transition:opacity .6s ease,transform .6s ease}
+.reveal-scale.in-view{opacity:1;transform:none}
+
+.stagger-1{transition-delay:.1s}
+.stagger-2{transition-delay:.2s}
+.stagger-3{transition-delay:.3s}
+.stagger-4{transition-delay:.4s}
+.stagger-5{transition-delay:.5s}
+.stagger-6{transition-delay:.6s}
+
+/* BACK LINK */
+.back-link{
+  position:fixed;bottom:28px;left:28px;z-index:200;
+  background:var(--brown);color:var(--cream);
+  padding:10px 20px;border-radius:50px;
+  font-family:'Lato',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  text-decoration:none;
+  box-shadow:0 4px 16px rgba(92,61,46,0.3);
+  transition:all .2s;display:flex;align-items:center;gap:8px;
+}
+.back-link:hover{background:var(--gold);transform:translateY(-2px)}
+.back-link svg{width:14px;height:14px}
+
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr;gap:48px}
+  .hero-visual{height:380px;order:-1}
+  .story-inner{grid-template-columns:1fr}
+  .story-images{height:360px;order:-1}
+  .process-steps{grid-template-columns:repeat(2,1fr);gap:40px}
+  .process-steps::before{display:none}
+  .specials-grid{grid-template-columns:1fr}
+  .hours-inner{grid-template-columns:1fr}
+  .testimonials-grid{grid-template-columns:1fr}
+  .order-inner{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  .menu-tabs .menu-tab{padding:8px 16px;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<a href="../demos.html" class="back-link" aria-label="Back to gallery">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15,18 9,12 15,6"/></svg>
+  Gallery
+</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Éclat<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#specials">Specials</a></li>
+      <li><a href="#order">Order</a></li>
+    </ul>
+    <a href="#order" class="nav-cta">Order Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal">Artisan Bakery Since 1987</p>
+      <h1 class="hero-title reveal stagger-1">Baked with <em>Patience,</em> Served with Pride.</h1>
+      <p class="hero-desc reveal stagger-2">Every loaf kneaded by hand. Every croissant laminated with 27 layers of French butter. No shortcuts, no compromises — just honest, beautiful bread.</p>
+      <div class="hero-btns reveal stagger-3">
+        <a href="#menu" class="btn-primary">Explore Menu</a>
+        <a href="#order" class="btn-text">Order for Pickup</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal-right stagger-2">
+      <img
+        src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=700&q=80"
+        alt="Artisan breads and pastries"
+        class="hero-img-main"
+      >
+      <div class="hero-badge">
+        <div class="hero-badge-num">38</div>
+        <div class="hero-badge-txt">Years Baking</div>
+      </div>
+      <div class="hero-float">
+        <div style="position:relative;width:48px;height:48px;margin:0 auto 8px;background:var(--cream);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--brown)" stroke-width="2" aria-hidden="true"><path d="M17 8C8 10 5.9 16.17 3.82 19.82S2 22 2 22"/><path d="M17 8C8 10 5.9 16.17 3.82 19.82"/><path d="M10 12.5c1.5-2 3.5-2.5 5-1.5"/></svg>
+          <div class="steam-container">
+            <div class="steam"></div>
+            <div class="steam"></div>
+            <div class="steam"></div>
+          </div>
+        </div>
+        <div class="hero-float-txt">Fresh from the oven</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="menu-inner">
+    <div class="menu-header">
+      <p class="section-label reveal">Our Menu</p>
+      <h2 class="section-title reveal stagger-1">Crafted <em>Daily</em></h2>
+      <p class="section-subtitle reveal stagger-2">Everything is baked fresh each morning. We sell out — please order ahead for guarantee.</p>
+    </div>
+    <div class="menu-tabs" role="tablist">
+      <button class="menu-tab active" role="tab">Breads</button>
+      <button class="menu-tab" role="tab">Pastries</button>
+      <button class="menu-tab" role="tab">Cakes</button>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card reveal stagger-1">
+        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&q=80" alt="Sourdough Miche" class="menu-card-img">
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Sourdough Miche</h3>
+          <p class="menu-card-desc">48-hour ferment, open crumb, thick caramelized crust. Our most beloved loaf.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$12</span>
+            <span class="menu-card-badge">Bestseller</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal stagger-2">
+        <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?w=500&q=80" alt="Croissant au Beurre" class="menu-card-img">
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Croissant au Beurre</h3>
+          <p class="menu-card-desc">27 hand-laminated layers with AOP Charentes butter. Shatteringly crisp.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$4.50</span>
+            <span class="menu-card-badge">Classic</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal stagger-3">
+        <img src="https://images.unsplash.com/photo-1612430258037-a99e66c0afed?w=500&q=80" alt="Pain de Campagne" class="menu-card-img">
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Pain de Campagne</h3>
+          <p class="menu-card-desc">Country loaf with rye, wheat, and sesame. Rustic, nutty, perfect for toast.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$10</span>
+            <span class="menu-card-badge">Daily</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal stagger-4">
+        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500&q=80" alt="Tarte aux Fraises" class="menu-card-img">
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Tarte aux Fraises</h3>
+          <p class="menu-card-desc">Crème pâtissière, fresh strawberries, vanilla sablé crust. Weekend special.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$7</span>
+            <span class="menu-card-badge">Seasonal</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal stagger-5">
+        <img src="https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=500&q=80" alt="Brioche Feuilletée" class="menu-card-img">
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Brioche Feuilletée</h3>
+          <p class="menu-card-desc">Flaky, buttery, cloud-light. Served warm with house-made apricot jam.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$5</span>
+            <span class="menu-card-badge">Morning</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal stagger-6">
+        <img src="https://images.unsplash.com/photo-1612537785416-2e0b9c3bfab4?w=500&q=80" alt="Focaccia Genovese" class="menu-card-img">
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">Focaccia Genovese</h3>
+          <p class="menu-card-desc">Olive oil-drenched with rosemary and fleur de sel. Baked twice daily.</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">$8</span>
+            <span class="menu-card-badge">Popular</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story-section" id="story">
+  <div class="story-inner">
+    <div class="story-images reveal-left">
+      <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=600&q=80" alt="Baker at work" class="story-img1">
+      <img src="https://images.unsplash.com/photo-1591994843349-f415893b3a6b?w=400&q=80" alt="Artisan bread" class="story-img2">
+    </div>
+    <div class="story-content">
+      <p class="section-label reveal">Our Story</p>
+      <h2 class="story-title reveal stagger-1">Three Generations of <em>Craft</em></h2>
+      <p class="story-text reveal stagger-2">My grandmother baked bread at 4am in Lyon, and her hands always smelled of sourdough. When she emigrated, she brought her starter — 60 years old now, fed every day without exception.</p>
+      <p class="story-text reveal stagger-3">Éclat is not fast food disguised as artisan. We keep the same rhythms: slow fermentation, natural leavening, wood-fired ovens. No shortcuts, because bread knows.</p>
+      <p class="story-text reveal stagger-4">We bake 400 loaves a day. Some mornings we sell out by noon. We won't bake more to fix that — quality over quantity, always.</p>
+      <p class="story-sig reveal stagger-5">— Marie Éclat</p>
+      <p class="story-sig-sub reveal stagger-5">Third generation, Head Baker</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="process-inner">
+    <div class="process-header">
+      <p class="section-label reveal">How We Bake</p>
+      <h2 class="section-title reveal stagger-1">No <em>Shortcuts.</em> Ever.</h2>
+    </div>
+    <div class="process-steps">
+      <div class="process-step reveal stagger-1">
+        <div class="step-num">1</div>
+        <h3 class="step-title">Milling</h3>
+        <p class="step-desc">Stone-milled flour, sourced from heritage wheat farms in Burgundy</p>
+      </div>
+      <div class="process-step reveal stagger-2">
+        <div class="step-num">2</div>
+        <h3 class="step-title">Ferment</h3>
+        <p class="step-desc">12–48 hour cold fermentation. No commercial yeast. Patience is the ingredient.</p>
+      </div>
+      <div class="process-step reveal stagger-3">
+        <div class="step-num">3</div>
+        <h3 class="step-title">Shape</h3>
+        <p class="step-desc">Hand-shaped by our bakers. Every loaf has a name attached.</p>
+      </div>
+      <div class="process-step reveal stagger-4">
+        <div class="step-num">4</div>
+        <h3 class="step-title">Bake</h3>
+        <p class="step-desc">Wood-fired deck ovens at 480°C. Steam injection for the perfect crust.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALS -->
+<section class="specials-section" id="specials">
+  <div class="specials-inner">
+    <div class="specials-header">
+      <p class="section-label reveal">This Week</p>
+      <h2 class="section-title reveal stagger-1"><em>Weekend</em> Specials</h2>
+      <p class="section-subtitle reveal stagger-2">Limited quantities. Pre-order by Friday to guarantee yours.</p>
+    </div>
+    <div class="specials-grid">
+      <div class="special-featured reveal-left">
+        <img src="https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=700&q=80" alt="Gâteau Basque" class="special-featured-img">
+        <div class="special-featured-body">
+          <span class="special-tag">Weekend Feature</span>
+          <h3 class="special-title">Gâteau Basque</h3>
+          <p class="special-desc">Almond cream, black cherry preserve, lemon zest pastry. A southern French classic baked with love, Saturday only.</p>
+          <div class="special-price">$28 / whole</div>
+        </div>
+      </div>
+      <div class="specials-list reveal-right stagger-1">
+        <div class="special-item">
+          <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=160&q=80" alt="Kouign Amann" class="special-item-img">
+          <div>
+            <div class="special-item-name">Kouign Amann</div>
+            <div class="special-item-desc">Caramelized, flaky, dangerously good</div>
+            <div class="special-item-price">$6.50</div>
+          </div>
+        </div>
+        <div class="special-item">
+          <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=160&q=80" alt="Mille-Feuille" class="special-item-img">
+          <div>
+            <div class="special-item-name">Mille-Feuille</div>
+            <div class="special-item-desc">Vanilla crème diplomate, caramelized puff pastry</div>
+            <div class="special-item-price">$7.50</div>
+          </div>
+        </div>
+        <div class="special-item">
+          <img src="https://images.unsplash.com/photo-1495147466023-ac5c588e2e94?w=160&q=80" alt="Baguette de Tradition" class="special-item-img">
+          <div>
+            <div class="special-item-name">Tradition Baguette</div>
+            <div class="special-item-desc">Extra-long cold proof, bold chewy crumb</div>
+            <div class="special-item-price">$3.50</div>
+          </div>
+        </div>
+        <div class="special-item">
+          <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=160&q=80" alt="Chocolate Éclair" class="special-item-img">
+          <div>
+            <div class="special-item-name">Chocolate Éclair</div>
+            <div class="special-item-desc">Dark 72% ganache, light choux pastry</div>
+            <div class="special-item-price">$5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS -->
+<section class="hours-section">
+  <div class="hours-inner">
+    <div class="hours-block reveal stagger-1">
+      <h3>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Opening Hours
+      </h3>
+      <div class="hours-row"><span class="hours-day">Monday–Friday</span><span class="hours-time">7:00 – 18:00</span></div>
+      <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">7:00 – 16:00</span></div>
+      <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time closed">Closed</span></div>
+    </div>
+    <div class="hours-block reveal stagger-2">
+      <h3>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Find Us
+      </h3>
+      <p style="font-family:'Crimson Pro',serif;font-size:17px;font-style:italic;color:var(--brown-light);line-height:1.8">42 Rue du Faubourg<br>Saint-Antoine<br>75012 Paris</p>
+    </div>
+    <div class="hours-block reveal stagger-3">
+      <h3>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.46 19.79 19.79 0 0 1 1.61 2.84 2 2 0 0 1 3.6.66h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.23A16 16 0 0 0 13.9 14.2l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.9 15.5l.02 1.42z"/></svg>
+        Contact
+      </h3>
+      <p style="font-family:'Crimson Pro',serif;font-size:17px;font-style:italic;color:var(--brown-light);line-height:1.8">
+        +33 1 42 78 36 90<br>
+        hello@eclatbakery.fr<br>
+        @eclatbakery
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="testimonials-inner">
+    <div class="testimonials-header">
+      <p class="section-label reveal">What People Say</p>
+      <h2 class="section-title reveal stagger-1">Our <em>Regulars</em></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal stagger-1">
+        <div class="testimonial-stars">
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="testimonial-text">"I've been coming every Saturday for 11 years. The sourdough is the best in Paris. Don't argue with me, I've done the research."</p>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=96&q=80" alt="Sophie" class="testimonial-avatar">
+          <div>
+            <div class="testimonial-name">Sophie Laurent</div>
+            <div class="testimonial-role">Saturday regular since 2014</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal stagger-2">
+        <div class="testimonial-stars">
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="testimonial-text">"As a chef I'm critical of bread. Éclat is the only place in Paris I'd serve without modification. The crumb structure is extraordinary."</p>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=96&q=80" alt="Thomas" class="testimonial-avatar">
+          <div>
+            <div class="testimonial-name">Thomas Moreau</div>
+            <div class="testimonial-role">Executive Chef, Le Bernardin Paris</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal stagger-3">
+        <div class="testimonial-stars">
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg class="star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="testimonial-text">"Flew in from New York specifically to visit. Stood in the cold for 40 minutes. Worth every second. The croissant changed my understanding of pastry."</p>
+        <div class="testimonial-author">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=96&q=80" alt="Julia" class="testimonial-avatar">
+          <div>
+            <div class="testimonial-name">Julia Chen</div>
+            <div class="testimonial-role">Food writer, New York</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER -->
+<section class="order-section" id="order">
+  <div class="order-inner">
+    <div class="order-info">
+      <p class="section-label reveal">Pickup Orders</p>
+      <h2 class="order-title reveal stagger-1">Reserve Your <em>Loaves</em></h2>
+      <p class="order-desc reveal stagger-2">We sell out. Pre-ordering guarantees your bread is waiting when you arrive. Same-day orders accepted until 5pm for next morning pickup.</p>
+      <div class="order-note reveal stagger-3">
+        <div class="order-note-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <p class="order-note-text">Orders are confirmed by phone or email within 2 hours. Pickup between 7am–10am for best selection. Payment at counter.</p>
+      </div>
+    </div>
+    <div class="order-form reveal stagger-2">
+      <form>
+        <div class="form-group">
+          <label class="form-label" for="name">Your Name</label>
+          <input type="text" id="name" class="form-input" placeholder="Marie Curie">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input type="email" id="email" class="form-input" placeholder="marie@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="pickup-date">Pickup Date</label>
+          <input type="date" id="pickup-date" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="items">What Would You Like?</label>
+          <textarea id="items" class="form-textarea" placeholder="e.g. 2x sourdough miche, 4x croissant, 1x gâteau Basque"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Order Request</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Éclat<span>.</span></div>
+    <p class="footer-tagline">Baked by hand. Eaten with joy.</p>
+    <div class="footer-links">
+      <a href="#menu">Menu</a>
+      <a href="#story">Our Story</a>
+      <a href="#order">Order</a>
+      <a href="mailto:hello@eclatbakery.fr">Contact</a>
+    </div>
+    <p class="footer-copy">© 2025 Éclat Bakery. 42 Rue du Faubourg Saint-Antoine, 75012 Paris.</p>
+  </div>
+</footer>
+
+<script>
+// Intersection Observer for reveal animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => observer.observe(el));
+
+// Menu tabs (visual only)
+document.querySelectorAll('.menu-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+
+// Sticky nav shadow
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.boxShadow = window.scrollY > 20 ? '0 2px 20px rgba(92,61,46,0.08)' : 'none';
+});
+</script>
+</body>
+</html>
