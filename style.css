@@ -361,6 +361,65 @@ p  { color: var(--text-muted); font-size: 1.05rem; }
   color: var(--accent);
 }
 .pricing-card .btn { width: 100%; justify-content: center; }
+.pricing-plan-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.pricing-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.pricing-cards .pricing-card {
+  max-width: none;
+  margin: 0;
+  text-align: left;
+}
+.pricing-card--featured {
+  border-color: rgba(79, 142, 247, 0.5);
+  box-shadow: 0 0 80px rgba(79, 142, 247, 0.12);
+}
+.pricing-addons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 880px;
+  margin: 24px auto 0;
+}
+.pricing-addon {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+}
+.pricing-addon-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.pricing-addon-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+.pricing-addon-price {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--accent);
+  white-space: nowrap;
+  margin: 0;
+}
 
 /* ============================================================
    SAMPLE WEBSITES
@@ -529,6 +588,8 @@ p  { color: var(--text-muted); font-size: 1.05rem; }
   .steps::before { display: none; }
   .included-grid { grid-template-columns: 1fr; }
   .pricing-card { padding: 36px 24px; }
+  .pricing-cards { grid-template-columns: 1fr; }
+  .pricing-addons { grid-template-columns: 1fr; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
   .samples-grid { grid-template-columns: 1fr 1fr; }
 }
